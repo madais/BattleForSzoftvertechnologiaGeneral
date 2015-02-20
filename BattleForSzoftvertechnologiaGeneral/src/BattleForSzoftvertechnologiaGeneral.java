@@ -5,6 +5,7 @@ public class BattleForSzoftvertechnologiaGeneral {
 		
 
 		System.out.println("Ez lesz a szuper játék de tényleg!");
+		System.out.println("( ͡° ͜ʖ ͡°)");
 	}
 
 }
