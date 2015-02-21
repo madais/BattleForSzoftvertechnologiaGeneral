@@ -5,9 +5,13 @@ public class BattleForSzoftvertechnologiaGeneral {
 
 	public static void main(String[] args) {
 // Commit test:		
-//		Király lesz, annyit érdemes még egyeztetnünk, hogy a fájlok milyen
-//		encoding szerint legyenek, mert windowson nem teljesen olvashatóak a linux
-//		alatt írt spec/ékezetes karakterek. Zoli
+//		Kirï¿½ly lesz, annyit ï¿½rdemes mï¿½g egyeztetnï¿½nk, hogy a fï¿½jlok milyen
+//		encoding szerint legyenek, mert windowson nem teljesen olvashatï¿½ak a linux
+//		alatt ï¿½rt spec/ï¿½kezetes karakterek. Zoli
+
+//		Szerintem az UTF8 az Ã©ppelmÃ©jÅ± vÃ¡lasztÃ¡s szemben a windows fÃ©le CP1250-el
+//		De mondjuk 2 kattintÃ¡s Ã¡tÃ¡llÃ­Ã­tani. (Ã©n utf-8 ba mentek)
+		
 		System.out.println("Ez lesz a szuper jÃ¡tÃ©k de tÃ©nyleg!");
 		System.out.println("( Í¡Â° ÍœÊ– Í¡Â°)");
 
@@ -30,7 +34,7 @@ public class BattleForSzoftvertechnologiaGeneral {
 //         ///-._ _ _ _ _ _ _}^ - - - - ~                     ~--,   .-~
 
 		
-		JOptionPane.showMessageDialog(null, "A buddhista zen televízió férfi bemondónõje vagyok. A Grzegorz Brzêczyszczykiewicz emlékcsoportról tudósítunk. ");
+		JOptionPane.showMessageDialog(null, "A buddhista zen televï¿½ziï¿½ fï¿½rfi bemondï¿½nï¿½je vagyok. A Grzegorz Brzï¿½czyszczykiewicz emlï¿½kcsoportrï¿½l tudï¿½sï¿½tunk. ");
 	}
 
 }
