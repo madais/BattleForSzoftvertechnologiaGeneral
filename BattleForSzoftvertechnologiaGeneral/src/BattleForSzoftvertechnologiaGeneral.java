@@ -1,4 +1,8 @@
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
+
+import communication.*;
 
 
 public class BattleForSzoftvertechnologiaGeneral {
@@ -34,7 +38,21 @@ public class BattleForSzoftvertechnologiaGeneral {
 //         ///-._ _ _ _ _ _ _}^ - - - - ~                     ~--,   .-~
 
 		
-		JOptionPane.showMessageDialog(null, "A buddhista zen telev�zi� f�rfi bemond�n�je vagyok. A Grzegorz Brz�czyszczykiewicz eml�kcsoportr�l tud�s�tunk. ");
+		//JOptionPane.showMessageDialog(null, "A buddhista zen telev�zi� f�rfi bemond�n�je vagyok. A Grzegorz Brz�czyszczykiewicz eml�kcsoportr�l tud�s�tunk. ");
+		/*
+		try{
+		Communication.start_server();
+		}
+		catch (IOException ex){
+			ex.printStackTrace();
+		}*/
+		
+		try{
+			CommTest.main(args);
+		}
+		catch (IOException ex){
+			ex.printStackTrace();
+		}
 	}
 
 }
