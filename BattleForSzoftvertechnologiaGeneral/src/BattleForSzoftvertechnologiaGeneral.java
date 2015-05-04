@@ -2,23 +2,31 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import bfsztg_gui.ArcherActionListener;
+import bfsztg_gui.DefendActionListener;
+import bfsztg_gui.EndTurnActionListener;
+import bfsztg_gui.GUI;
+import bfsztg_gui.WaitActionListener;
+import bfsztg_gui.GameCanvasMouseListener;
+import bfsztg_gui.InfantryActionListener;
 import communication.*;
 
 
 public class BattleForSzoftvertechnologiaGeneral {
 
 	public static void main(String[] args) {
-// Commit test:		
-//		Kir�ly lesz, annyit �rdemes m�g egyeztetn�nk, hogy a f�jlok milyen
-//		encoding szerint legyenek, mert windowson nem teljesen olvashat�ak a linux
-//		alatt �rt spec/�kezetes karakterek. Zoli
-
-//		Szerintem az UTF8 az éppelméjű választás szemben a windows féle CP1250-el
-//		De mondjuk 2 kattintás átállíítani. (én utf-8 ba mentek)
+		// Instantiating the GUI
+		try {
+			GUI window = new GUI();
+			window.getFrmBattleForSzoftvertechnolgia().setVisible(true);
+			//Game map mouse listener
+			window.getGameCanvasPanel().addMouseListener(new GameCanvasMouseListener(window.getGameCanvasPanel(), window));			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		System.out.println("Ez lesz a szuper játék de tényleg!");
-		System.out.println("( ͡° ͜ʖ ͡°)");
-//		FIXME encoding beállítás
+		
 
 //                      ^    ^
 //                     / \  //\
