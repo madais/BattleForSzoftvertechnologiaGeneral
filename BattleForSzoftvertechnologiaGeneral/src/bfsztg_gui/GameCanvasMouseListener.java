@@ -37,9 +37,9 @@ public class GameCanvasMouseListener implements MouseListener {
 		int[] minCellCoord = new int[2];
 		minCellCoord[0]=0;
 		minCellCoord[1]=0;
-		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
-			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
-				distance = Math.sqrt((e.getX()-graphics.getCellCentersX()[i][j])*(e.getX()-graphics.getCellCentersX()[i][j]) + (e.getY()-graphics.getCellCentersX()[i][j])*(e.getY()-graphics.getCellCentersX()[i][j]));						
+		for(int i=0; i<24; i++) {
+			for(int j=0; j<10; j++) {
+				distance = Math.sqrt((e.getX()-graphics.getCellCentersX()[i][j])*(e.getX()-graphics.getCellCentersX()[i][j]) + (e.getY()-graphics.getCellCentersY()[i][j])*(e.getY()-graphics.getCellCentersY()[i][j]));			
 				if(distance < minDistance){
 					minDistance = distance;
 					minCellCoord[0]=i;

@@ -35,7 +35,11 @@ public class GameCanvasPanel extends JPanel{
 		PaintTerrain(g,cells);
 		PaintUnits(g,cells);
 		PaintMarkers(g,cells);
-		
+//		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
+//			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
+//				g.drawOval(cellCentersX[i][j], cellCentersY[i][j], 2, 2);
+//			}
+//		}
 	}
 	
 	private void PaintUnits(Graphics g, GraphicCell[][] cells2) {

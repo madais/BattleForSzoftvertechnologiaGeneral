@@ -181,6 +181,7 @@ public class GameOn {
 							for (int i=0;i<gameSettings.MAP_SIZE_Y;i++) {
 								cells[0][i].setMarker(Marker.MOVEABLE);
 							}
+							gui.getGameCanvasPanel().setCells(cells);
 						}else {
 							recruiting = false;
 							gui.disableUnitRecruiting();
@@ -198,7 +199,7 @@ public class GameOn {
 						gui.enableUnitRecruiting();
 						GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 						for (int i=0;i<10;i++) {
-							cells[i][0].setMarker(Marker.MOVEABLE);
+							cells[gameSettings.MAP_SIZE_X-1][i].setMarker(Marker.MOVEABLE);
 						}
 						gui.getGameCanvasPanel().setCells(cells);
 					}else {
@@ -230,7 +231,7 @@ public class GameOn {
 		T1=new Team(1);
 		T2=new Team(2);
 		initTeams();
-		setunittomap(M,T1,T2);//inicializálás vége
+		//setunittomap(M,T1,T2);//inicializálás vége
 		gui.getGameCanvasPanel().addMouseListener(new GameCanvasMouseListener(gui.getGameCanvasPanel(), gui, this));
 		gui.getBtnArcher().addActionListener(new ArcherActionListener(this));
 		gui.getBtnInfantry().addActionListener(new InfantryActionListener(this));

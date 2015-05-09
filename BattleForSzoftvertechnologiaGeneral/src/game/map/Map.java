@@ -22,7 +22,7 @@ public class Map {
 		
 		for ( int row=1 ; row <= gameSettings.MAP_SIZE_X ; row++ ){
 			for ( int column=1 ; column <= gameSettings.MAP_SIZE_Y ; column++ ){
-				if (row==6 && (column==6 || column==12 || column==18)){
+				if (column==6 && (row==6 || row==12 || row==18)){
 					map[row-1][column-1]=new Castle(row,column,null);
 				}
 				else{
@@ -237,7 +237,6 @@ public class Map {
 		
 		return result;
 	}
-	
 	
 
 }
