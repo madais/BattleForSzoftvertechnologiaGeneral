@@ -1,5 +1,7 @@
 package communication;
+ 
+import game.game.GameOn;
 
 public interface TableListener {
-	//public void recieveTable(Table table);
+	public void recieveTable(GameOn table);
 }

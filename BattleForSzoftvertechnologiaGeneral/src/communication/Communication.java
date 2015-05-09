@@ -1,5 +1,7 @@
 package communication;
 
+import game.game.GameOn;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.IOException;
@@ -74,14 +76,18 @@ public abstract class Communication {
 	public static void send_message(String str){
 		client.send_msg(str + "\n");
 	}
-	/*
-	public static void send_table(Table table){
-		client.send_table(table);
+	
+	public static void send_table(GameOn table){
+		client.send_table_client(table);
 	}
-	*/
+	
 	
 	public static void subscribe_message(MsgListener listener){
 		client.subscribe_msg(listener);
+	}
+	
+	public static void subscribe_table(TableListener listener){
+		client.subscribe_table(listener);
 	}
 
 }
