@@ -7,22 +7,6 @@ public class Team {
 	public Team (int teamnumber){
 		units=new Unit[6];
 		teamnum=6;
-		if (teamnumber==1){
-			units[0]=new Cavalary(teamnumber,1,1);
-			units[1]=new Cavalary(teamnumber,10,1);
-			units[2]=new Archer(teamnumber,2,1);
-			units[3]=new Archer(teamnumber,9,1);
-			units[4]=new Pikeman(teamnumber,3,1);
-			units[5]=new Pikeman(teamnumber,8,1);
-		}
-		else{
-			units[0]=new Cavalary(teamnumber,1,15);
-			units[1]=new Cavalary(teamnumber,10,15);
-			units[2]=new Archer(teamnumber,2,15);
-			units[3]=new Archer(teamnumber,9,15);
-			units[4]=new Pikeman(teamnumber,3,15);
-			units[5]=new Pikeman(teamnumber,8,15);
-		}
 	}
 	
 	public void setpoint(int newpoint){

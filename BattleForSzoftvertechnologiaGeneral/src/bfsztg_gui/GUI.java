@@ -30,6 +30,10 @@ public class GUI {
 	private JTextArea txtrChattextarea;
 	private JTextField chatTextField;
 	private GameCanvasPanel gameCanvasPanel;
+	JButton btnInfantry;
+	JButton btnArcher;
+	JButton btnCavalry;
+	JButton btnEndTurn;
 	
 	/**
 	 * Launch the application.
@@ -206,31 +210,29 @@ public class GUI {
 		gbc_lblRecruit.gridy = 0;
 		newUnitsPanel.add(lblRecruit, gbc_lblRecruit);
 
-		JButton btnInfantry = new JButton("Infantry");
+		btnInfantry = new JButton("Infantry");
 		GridBagConstraints gbc_btnInfantry = new GridBagConstraints();
 		gbc_btnInfantry.insets = new Insets(0, 0, 5, 0);
 		gbc_btnInfantry.gridx = 0;
 		gbc_btnInfantry.gridy = 1;
 		btnInfantry.setPreferredSize(new Dimension(100, 50));
-		btnInfantry.addActionListener(new InfantryActionListener());
 		newUnitsPanel.add(btnInfantry, gbc_btnInfantry);
 
-		JButton btnArcher = new JButton("Archers");
+		btnArcher = new JButton("Archers");
 		GridBagConstraints gbc_btnArcher = new GridBagConstraints();
 		gbc_btnArcher.insets = new Insets(0, 0, 5, 0);
 		gbc_btnArcher.gridx = 0;
 		gbc_btnArcher.gridy = 2;
 		btnArcher.setPreferredSize(new Dimension(100, 50));
-		btnArcher.addActionListener(new ArcherActionListener());
+		
 		newUnitsPanel.add(btnArcher, gbc_btnArcher);
 
-		JButton btnCavalry = new JButton("Cavalry");
+		btnCavalry = new JButton("Cavalry");
 		GridBagConstraints gbc_btnCavalry = new GridBagConstraints();
 		gbc_btnCavalry.insets = new Insets(0, 0, 5, 0);
 		gbc_btnCavalry.gridx = 0;
 		gbc_btnCavalry.gridy = 3;
 		btnCavalry.setPreferredSize(new Dimension(100, 50));
-		btnCavalry.addActionListener(new CavalryActionListener());
 		newUnitsPanel.add(btnCavalry, gbc_btnCavalry);
 
 		JPanel endWaitDefendPanel = new JPanel();
@@ -262,12 +264,11 @@ public class GUI {
 		btnDefend.addActionListener(new DefendActionListener());
 		endWaitDefendPanel.add(btnDefend, gbc_btnDefend);
 
-		JButton btnEndTurn = new JButton("End turn");
+		btnEndTurn = new JButton("End turn");
 		GridBagConstraints gbc_btnEndTurn = new GridBagConstraints();
 		gbc_btnEndTurn.gridx = 0;
 		gbc_btnEndTurn.gridy = 2;
 		btnEndTurn.setPreferredSize(new Dimension(100, 50));
-		btnEndTurn.addActionListener(new EndTurnActionListener());
 		endWaitDefendPanel.add(btnEndTurn, gbc_btnEndTurn);		
 	}
 
@@ -300,4 +301,50 @@ public class GUI {
 	public void setGameCanvasPanel(GameCanvasPanel gameCanvasPanel) {
 		this.gameCanvasPanel = gameCanvasPanel;
 	}
+	
+	public void enableUnitRecruiting(){
+		btnInfantry.setEnabled(true);
+		btnArcher.setEnabled(true);
+		btnCavalry.setEnabled(true);
+	}
+	
+	public void disableUnitRecruiting(){
+		btnInfantry.setEnabled(false);
+		btnArcher.setEnabled(false);
+		btnCavalry.setEnabled(false);
+	}
+
+	public JButton getBtnInfantry() {
+		return btnInfantry;
+	}
+
+	public void setBtnInfantry(JButton btnInfantry) {
+		this.btnInfantry = btnInfantry;
+	}
+
+	public JButton getBtnArcher() {
+		return btnArcher;
+	}
+
+	public void setBtnArcher(JButton btnArcher) {
+		this.btnArcher = btnArcher;
+	}
+
+	public JButton getBtnCavalry() {
+		return btnCavalry;
+	}
+
+	public void setBtnCavalry(JButton btnCavalry) {
+		this.btnCavalry = btnCavalry;
+	}
+
+	public JButton getBtnEndTurn() {
+		return btnEndTurn;
+	}
+
+	public void setBtnEndTurn(JButton btnEndTurn) {
+		this.btnEndTurn = btnEndTurn;
+	}
+	
+	
 }

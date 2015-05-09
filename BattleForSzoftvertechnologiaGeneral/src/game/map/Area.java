@@ -6,8 +6,8 @@ public class Area {
 	int poz1;//sor
 	int poz2;//oszlop
 	int team;//ha van rajta egység, akkor melyik csapat-é
-	int neighbours[][];//szomszédok
-	int neighnum;//hány szomszédja van
+	public int neighbours[][];//szomszédok
+	public int neighnum;//hány szomszédja van
 	int canshoot[][];
 	int id;
 	boolean shoot;//átlõhetõ-e

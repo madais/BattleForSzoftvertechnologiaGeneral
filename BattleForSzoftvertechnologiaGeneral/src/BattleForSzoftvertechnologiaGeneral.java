@@ -1,3 +1,5 @@
+import game.game.GameOn;
+
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -14,13 +16,17 @@ import communication.*;
 
 public class BattleForSzoftvertechnologiaGeneral {
 
+
+	
+	
 	public static void main(String[] args) {
 		// Instantiating the GUI
 		try {
 			GUI window = new GUI();
 			window.getFrmBattleForSzoftvertechnolgia().setVisible(true);
+			window.disableUnitRecruiting();
 			//Game map mouse listener
-			window.getGameCanvasPanel().addMouseListener(new GameCanvasMouseListener(window.getGameCanvasPanel(), window));			
+			GameOn game = new GameOn(window);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

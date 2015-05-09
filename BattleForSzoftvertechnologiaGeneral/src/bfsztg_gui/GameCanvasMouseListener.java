@@ -1,16 +1,22 @@
 package bfsztg_gui;
 
+import game.game.GameOn;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import bfsztg_settings.gameSettings;
 
 public class GameCanvasMouseListener implements MouseListener {
 	
 	GameCanvasPanel graphics;
 	GUI parent;
-
-	public GameCanvasMouseListener(GameCanvasPanel gameCanvasPanel, GUI gui) {
-		graphics = gameCanvasPanel;
-		parent = gui;
+	GameOn gameOn;
+	
+	public GameCanvasMouseListener(GameCanvasPanel gameCanvasPanel, GUI gui, GameOn gameOn) {
+		this.graphics = gameCanvasPanel;
+		this.parent = gui;
+		this.gameOn = gameOn;
 	}
 
 	@Override
@@ -20,14 +26,9 @@ public class GameCanvasMouseListener implements MouseListener {
 		int clickedY = clicked[1];
 		System.out.println("Clicked X:" + clicked[0]);
 		System.out.println("Clicked Y:" + clicked[1]);
-		//place of game logic event handler
+		gameOn.thereWasAClick(clickedX,clickedY);
 		
-		//graphics.setCells();
-		//vagy
-		//janiFuggvenye(clickedX,clickedY,parent,graphics) ahol parent a gui az ikonokkal
-		// a graphics pedig a panel ahol a hatszogletu cuccok vannak
-		//graphics.setCells() allitgatas utan pedig automatikusan ujra rajzolja
-		graphics.repaint();	
+		
 	}
 	
 	private int[] getClickedCellID(MouseEvent e) {
@@ -36,8 +37,8 @@ public class GameCanvasMouseListener implements MouseListener {
 		int[] minCellCoord = new int[2];
 		minCellCoord[0]=0;
 		minCellCoord[1]=0;
-		for(int i=0; i<24; i++) {
-			for(int j=0; j<10; j++) {
+		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
+			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
 				distance = Math.sqrt((e.getX()-graphics.getCellCentersX()[i][j])*(e.getX()-graphics.getCellCentersX()[i][j]) + (e.getY()-graphics.getCellCentersX()[i][j])*(e.getY()-graphics.getCellCentersX()[i][j]));						
 				if(distance < minDistance){
 					minDistance = distance;

@@ -58,6 +58,63 @@ public class Unit {
 	int getPosition2(){
 		return area.getPoz2();
 	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getTeam() {
+		return team;
+	}
+
+	public void setTeam(int team) {
+		this.team = team;
+	}
+
+	public int getUnitid() {
+		return unitid;
+	}
+
+	public void setUnitid(int unitid) {
+		this.unitid = unitid;
+	}
+
+	public int getPoz1() {
+		return poz1;
+	}
+
+	public void setPoz1(int poz1) {
+		this.poz1 = poz1;
+	}
+
+	public int getPoz2() {
+		return poz2;
+	}
+
+	public void setPoz2(int poz2) {
+		this.poz2 = poz2;
+	}
+
+	public boolean isMoved() {
+		return moved;
+	}
+
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
 	
-	void drawunit(){};	
+	
+	
 }

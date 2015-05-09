@@ -14,6 +14,7 @@ import javax.swing.*;
 import bfsztg_gui.GraphicCell.Marker;
 import bfsztg_gui.GraphicCell.Terrain;
 import bfsztg_gui.GraphicCell.Unit;
+import bfsztg_settings.*;
 
 public class GameCanvasPanel extends JPanel{
 	
@@ -38,8 +39,8 @@ public class GameCanvasPanel extends JPanel{
 	}
 	
 	private void PaintUnits(Graphics g, GraphicCell[][] cells2) {
-		for(int i=0; i<24; i++) {
-			for(int j=0; j<10; j++) {
+		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
+			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
 				switch (cells[i][j].getUnit()){
 				case RED_ARCHER:
 					g.drawImage(images.getRedArcher(), cellCornersX[i][j], cellCornersY[i][j] , null);
@@ -68,8 +69,8 @@ public class GameCanvasPanel extends JPanel{
 	}
 
 	private void PaintMarkers(Graphics g, GraphicCell[][] cells2) {
-		for(int i=0; i<24; i++) {
-			for(int j=0; j<10; j++) {
+		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
+			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
 				switch (cells[i][j].getMarker()){
 				case SELECTED:
 					g.drawImage(images.getSelected(), cellCornersX[i][j], cellCornersY[i][j] , null);
@@ -91,8 +92,8 @@ public class GameCanvasPanel extends JPanel{
 	
 
 	private void PaintTerrain(Graphics g, GraphicCell[][] cells2) {
-		for(int i=0; i<24; i++) {
-			for(int j=0; j<10; j++) {
+		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
+			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
 				switch (cells[i][j].getTerrain()){
 				case DESERT:
 					g.drawImage(images.getDesert(), cellCornersX[i][j], cellCornersY[i][j] , null);
@@ -126,15 +127,15 @@ public class GameCanvasPanel extends JPanel{
 	public GameCanvasPanel(GUI parent){
 		   	this.parent = parent;
 			images = new GameImages();
-			cellCornersX = new int[24][10];
-			cellCornersY = new int[24][10];
-			cellCentersX = new int[24][10];
-			cellCentersY = new int[24][10];
+			cellCornersX = new int[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
+			cellCornersY = new int[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
+			cellCentersX = new int[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
+			cellCentersY = new int[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
 			int a = 65; //egy cella szélessége
 			int b = 57; //magassága
-			cells = new GraphicCell[24][10];
-			for(int i=0; i<24; i++) {
-				for(int j=0; j<10; j++) {
+			cells = new GraphicCell[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
+			for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
+				for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
 					if (i%2 == 0)
 					{
 						cellCornersX[i][j] = i*a - (a/4 + 1) * i;

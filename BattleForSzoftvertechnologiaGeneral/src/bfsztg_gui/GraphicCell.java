@@ -1,5 +1,7 @@
 package bfsztg_gui;
 
+import game.map.Map;
+
 public class GraphicCell {
 
 	Terrain terrain;
@@ -51,12 +53,22 @@ public class GraphicCell {
 		this.marker = marker;
 	}
 
+	public GraphicCell(Terrain terrain) {
+		super();
+		this.terrain = terrain;
+		this.unit = Unit.NONE;
+		this.marker = Marker.NONE;
+	}
+	
 	public GraphicCell() {
 		super();
 		this.terrain = Terrain.HILLS;
 		this.unit = Unit.NONE;
 		this.marker = Marker.NONE;
 	}
+	
+
+
 	
 	
 	
