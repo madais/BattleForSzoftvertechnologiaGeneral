@@ -34,6 +34,7 @@ public class GUI {
 	JButton btnArcher;
 	JButton btnCavalry;
 	JButton btnEndTurn;
+	JButton btnSend;
 	
 	/**
 	 * Launch the application.
