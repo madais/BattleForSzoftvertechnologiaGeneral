@@ -24,7 +24,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-public class GUI {
+import communication.MsgListener;
+
+public class GUI implements MsgListener {
 
 	private JFrame frmBattleForSzoftvertechnolgia;
 	private JTextArea txtrChattextarea;
@@ -114,11 +116,11 @@ public class GUI {
 		menuBar.add(mnConnection);
 
 		JMenuItem mntmHost = new JMenuItem("Host");
-		mntmHost.addActionListener(new HostMenuAction());
+		mntmHost.addActionListener(new HostMenuAction(thisGUI));
 		mnConnection.add(mntmHost);
 
 		JMenuItem mntmConnect = new JMenuItem("Connect");
-		mntmConnect.addActionListener(new ConnectMenuAction());
+		mntmConnect.addActionListener(new ConnectMenuAction(thisGUI));
 		mnConnection.add(mntmConnect);
 
 		JMenu mnHelp = new JMenu("Help");
@@ -159,15 +161,8 @@ public class GUI {
 		chatTextField.setColumns(100);
 		chatInputPanel.add(chatTextField, BorderLayout.WEST);
 
-		JButton btnSend = new JButton("Send");
-		btnSend.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				thisGUI.sendChatText();//DANI
-			}
-
-		});
+		btnSend = new JButton("Send");
+		
 		chatInputPanel.add(btnSend, BorderLayout.CENTER);
 
 		JButton btnClear = new JButton("Clear");
@@ -345,6 +340,21 @@ public class GUI {
 
 	public void setBtnEndTurn(JButton btnEndTurn) {
 		this.btnEndTurn = btnEndTurn;
+	}
+	
+	@Override
+	public void recieveMsg(String msg) {
+		// TODO Auto-generated method stub
+		
+		this.appendToChat(msg);
+	}
+
+	public JButton getBtnSend() {
+		return btnSend;
+	}
+
+	public void setBtnSend(JButton btnSend) {
+		this.btnSend = btnSend;
 	}
 	
 	

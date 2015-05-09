@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.io.BufferedOutputStream;
+import java.util.ArrayList;
 
 public class ClientHandler extends Communication implements Runnable{
 
@@ -14,6 +15,8 @@ public class ClientHandler extends Communication implements Runnable{
 	private Socket clientsocket=null;
 	public BufferedOutputStream out=null;
 	public BufferedInputStream in=null;
+	
+	private static ArrayList<BufferedOutputStream> outlist=new ArrayList<BufferedOutputStream>();
 	
 	
 	@Override
@@ -27,9 +30,12 @@ public class ClientHandler extends Communication implements Runnable{
 			try{
 				
 				int b;
-				while (in.available()>0) {	//&& number!=0){
+				while (in.available()>0 && number!=0){
 					b=in.read();
-					out.write(b);
+					for (BufferedOutputStream kifele: outlist){
+						kifele.write(b);
+					}
+					//out.write(b);
 					//System.out.println(String.format(b, format, args));
 				}
 				out.flush();
@@ -52,8 +58,9 @@ public class ClientHandler extends Communication implements Runnable{
 		super();
 		if (number<MAXCLIENT){
 			this.clientsocket=soc;
-			try {
+			try {		
 				this.out=new BufferedOutputStream(soc.getOutputStream());
+				outlist.add(this.out);
 				this.in=new BufferedInputStream(soc.getInputStream());
 				
 			}

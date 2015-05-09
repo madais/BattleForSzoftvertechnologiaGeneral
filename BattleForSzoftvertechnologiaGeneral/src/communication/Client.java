@@ -1,5 +1,7 @@
 package communication;
 
+import game.game.GameOn;
+
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.ArrayList;
+
 import communication.MsgListener;
 
 public class Client extends Communication implements Runnable{
@@ -38,13 +41,13 @@ public class Client extends Communication implements Runnable{
 	int file_out_cnt=0;
 	
 	ArrayList<MsgListener> msg_list=new ArrayList<MsgListener>();
-	//ArrayList<TableListener> table_list= new ArrayList<Table>();
+	ArrayList<TableListener> table_list= new ArrayList<TableListener>();
 	
 	ArrayList<String> msg_out_list=new ArrayList<String>();
 	ArrayList<String> msg_in_list=new ArrayList<String>();
 	
-	//ArrayList<Table> table_out_list=new ArrayList<Table>();
-	//ArrayList<Table> table_in_list=new ArrayList<Table>();
+	ArrayList<GameOn> table_out_list=new ArrayList<GameOn>();
+	ArrayList<GameOn> table_in_list=new ArrayList<GameOn>();
 	
 	
 	@Override
@@ -58,11 +61,11 @@ public class Client extends Communication implements Runnable{
 			if (!msg_in_list.isEmpty()){
 					recieve_msg();
 				}
-				/*
+				
 				if (!table_in_list.isEmpty()){
 					recieve_table();
 				}
-				*/
+				
 				
 				if (!msg_out_list.isEmpty()){
 					try{
@@ -72,7 +75,7 @@ public class Client extends Communication implements Runnable{
 						ex.printStackTrace();
 					}
 				}
-				/*
+				
 				if (!table_out_list.isEmpty()){
 					try{
 					send_data(table_out_list.remove(0));
@@ -81,7 +84,7 @@ public class Client extends Communication implements Runnable{
 						ex.printStackTrace();
 					}
 				}
-				*/
+				
 				try{
 					read_data();
 				}
@@ -120,7 +123,7 @@ public class Client extends Communication implements Runnable{
 		this.read_socket=new BufferedInputStream(client_socket.getInputStream());
 		this.write_socket=new BufferedOutputStream(client_socket.getOutputStream());
 		
-
+		
 		if (DEBUG){
 			System.out.println("Client socket created:" + client_socket.getPort());
 		}
@@ -155,11 +158,11 @@ public class Client extends Communication implements Runnable{
 			if (o instanceof String){
 				msg_in_list.add((String)o);
 			}
-			/*
-			if (o instanceof Table){
-				Table_in_list.add((Table)o);
+			
+			if (o instanceof GameOn){
+				table_in_list.add((GameOn)o);
 			}
-			*/
+			
 			file_in_cnt++;
 			
 		}
@@ -203,23 +206,42 @@ public class Client extends Communication implements Runnable{
 		}
 		return ;
 	}
-/*
-	public boolean send_table(Table table){
+
+	public boolean send_table_client(GameOn table){
 		table_out_list.add(table);
 		return true;
 	}
 	
 	public void recieve_table(){
-		Table table=table_in_list.remove(0);
+		GameOn table=table_in_list.remove(0);
 		for (TableListener subscriber :table_list){
 			subscriber.recieveTable(table);
 		}
 		return ;
-	}*/
+	}
 	
 	public void subscribe_msg(MsgListener listener){
 		msg_list.add(listener);
 	}
 
+	public void subscribe_tabel(TableListener listener){
+		table_list.add(listener);
+	}
+
+	
+	public void close_all(){
+		try {
+		client_socket.close();
+		read_socket.close();
+		write_socket.close();
+		}
+		catch (IOException ex){
+			ex.printStackTrace();
+		}
+		
+		xml_out.close();
+		xml_in.close();
+		
+	}
 	
 }

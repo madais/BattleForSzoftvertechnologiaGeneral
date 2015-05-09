@@ -1,5 +1,7 @@
 package communication;
 
+import game.game.GameOn;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.IOException;
@@ -25,6 +27,17 @@ public abstract class Communication {
 		return true;
 	}
 	
+	public static boolean start_server(String port) throws IOException{
+		int port_int=Integer.parseInt(port);
+		Runnable newserver= new Server(port_int);
+		Thread serverthread=new Thread(newserver);
+		
+		serverthread.start();
+		connect_server(DEFAULTHOST, port_int);
+		client.send_msg("Szerver indult: " + String.valueOf(port) + "\n");
+		return true;
+	}
+	
 	public static boolean connect_server(String ip){
 		try {
 			client=new Client(ip);
@@ -33,7 +46,8 @@ public abstract class Communication {
 			
 			clientthread.start();
 
-			
+
+			client.send_msg("Kliens indult: " + ip + "\n");
 		}
 		catch (IOException ex){
 			ex.printStackTrace();
@@ -41,18 +55,38 @@ public abstract class Communication {
 		}
 		return true;
 	}
-	
+
+	public static boolean connect_server(String ip, int port){
+		try {
+			client=new Client(ip, port);
+			Runnable newclient= client;
+			Thread clientthread=new Thread(newclient);
+			
+			clientthread.start();
+
+			client.send_msg("Kliens indult: " + ip+ ":" + String.valueOf(port) + "\n");
+		}
+		catch (IOException ex){
+			ex.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 	public static void send_message(String str){
-		client.send_msg(str);
+		client.send_msg(str + "\n");
 	}
-	/*
-	public static void send_table(Table table){
-		client.send_table(table);
+	
+	public static void send_table(GameOn table){
+		client.send_table_client(table);
 	}
-	*/
+	
 	
 	public static void subscribe_message(MsgListener listener){
 		client.subscribe_msg(listener);
+	}
+	
+	public static void subscribe_table(TableListener listener){
+		client.subscribe_table(listener);
 	}
 
 }

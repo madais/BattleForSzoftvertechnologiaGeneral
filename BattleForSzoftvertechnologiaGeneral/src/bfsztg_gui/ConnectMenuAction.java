@@ -20,10 +20,12 @@ public class ConnectMenuAction extends AbstractAction {
 	 */
 	private static final long serialVersionUID = -7083397607741696583L;
 
-	public ConnectMenuAction() {
-        super("Connect");
-    }
+GUI parent;
 	
+	public ConnectMenuAction(GUI gui) {
+        super("Connect");
+        parent = gui;
+    }
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -37,8 +39,12 @@ public class ConnectMenuAction extends AbstractAction {
 	    	  JOptionPane.showMessageDialog(null, "That does not seem to be a valid ip and port number :(");
 	      Communication.connect_server(inputValue);
 	      } else {
-	    	  //place of connecting method
+	    	  String[] cim = inputValue.split(":");
+	    	  Communication.connect_server(cim[0], Integer.parseInt(cim[1]));
+	    	  parent.getBtnSend().addActionListener(new SendChatActionListener(parent));
+	    	  Communication.subscribe_message(parent);
 	      }
+	
 	}
 
 }
