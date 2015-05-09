@@ -55,12 +55,13 @@ public class BattleForSzoftvertechnologiaGeneral {
 			ex.printStackTrace();
 		}*/
 		
+		/*
 		try{
 			CommTest.main(args);
 		}
 		catch (IOException ex){
 			ex.printStackTrace();
-		}
+		}*/
 	}
 
 }

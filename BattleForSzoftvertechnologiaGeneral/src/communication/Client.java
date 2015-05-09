@@ -120,7 +120,7 @@ public class Client extends Communication implements Runnable{
 		this.read_socket=new BufferedInputStream(client_socket.getInputStream());
 		this.write_socket=new BufferedOutputStream(client_socket.getOutputStream());
 		
-
+		
 		if (DEBUG){
 			System.out.println("Client socket created:" + client_socket.getPort());
 		}

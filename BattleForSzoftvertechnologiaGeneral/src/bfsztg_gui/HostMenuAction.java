@@ -5,7 +5,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
+import communication.CommTest;
+import communication.Communication;
 
 public class HostMenuAction extends AbstractAction {
 
@@ -14,12 +18,19 @@ public class HostMenuAction extends AbstractAction {
 	 */
 	private static final long serialVersionUID = 5638988311864715609L;
 
-	public HostMenuAction() {
+	GUI parent;
+	
+	public HostMenuAction(GUI gui) {
         super("Host");
+        this.parent = gui;
     }
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		
+		
+		
 		
 		String inputValue = JOptionPane.showInputDialog("Please input a port number:","1234"); 
 		
@@ -32,8 +43,16 @@ public class HostMenuAction extends AbstractAction {
 	    	  JOptionPane.showMessageDialog(null, "That does not seem to be a valid port number :(");
 	      } else
 	      {
-	    	  //place of hosting method
-	      }
+	    	try{
+	    	  Communication.start_server(inputValue);
+	    	  Communication.subscribe_message(this.parent);
+	    	  parent.getBtnSend().addActionListener(new SendChatActionListener(parent)); 
+	    	}
+	    	catch (Exception ex){
+	    		ex.printStackTrace();
+	    		
+	    	}
+	    	}
 		
 		
 	}
