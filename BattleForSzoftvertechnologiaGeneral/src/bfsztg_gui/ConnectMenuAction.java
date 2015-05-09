@@ -10,6 +10,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+import communication.Communication;
+
 public class ConnectMenuAction extends AbstractAction {
 
 
@@ -33,6 +35,7 @@ public class ConnectMenuAction extends AbstractAction {
 	      Matcher matcher = pattern.matcher(inputValue);
 	      if(!matcher.matches()){
 	    	  JOptionPane.showMessageDialog(null, "That does not seem to be a valid ip and port number :(");
+	      Communication.connect_server(inputValue);
 	      } else {
 	    	  //place of connecting method
 	      }

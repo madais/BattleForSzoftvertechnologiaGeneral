@@ -59,6 +59,8 @@ public class GameCanvasPanel extends JPanel{
 				case BLUE_CAVALRY:
 					g.drawImage(images.getBlueCavalry(), cellCornersX[i][j], cellCornersY[i][j] , null);
 					break;
+				default:
+					break;
 				
 				}				
 			}
