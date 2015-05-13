@@ -10,7 +10,7 @@ public class GraphicCell {
 	
 	public enum Terrain {
 	    DESERT, FIELDS, FOREST, HILLS,
-	    MOUNTAINS, SEA, SNOW, SWAMP 
+	    MOUNTAINS, SEA, SNOW, SWAMP, CASTLE
 	}
 	
 	public enum Unit {

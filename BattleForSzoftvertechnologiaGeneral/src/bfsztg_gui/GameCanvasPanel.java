@@ -123,6 +123,9 @@ public class GameCanvasPanel extends JPanel{
 				case SWAMP:
 					g.drawImage(images.getSwamp(), cellCornersX[i][j], cellCornersY[i][j] , null);
 					break;
+				case CASTLE:
+					g.drawImage(images.getCastle(), cellCornersX[i][j], cellCornersY[i][j] , null);
+					break;
 				}				
 			}
 		}		

@@ -16,6 +16,7 @@ public class GameImages {
 	Image sea;
 	Image snow;
 	Image swamp;
+	Image castle;
 	
 	Image redArcher;
 	Image blueArcher;
@@ -39,6 +40,7 @@ public class GameImages {
 		this.sea 			= loadImage("sea.png");
 		this.snow 			= loadImage("snow.png");
 		this.swamp 			= loadImage("swamp.png");
+		this.castle 		= loadImage("castle.png");
 		
 		this.redArcher 		= loadImage("red_archer.png");
 		this.blueArcher  	= loadImage("blue_archer.png");
@@ -196,6 +198,14 @@ public class GameImages {
 
 	public void setAttackable(Image attackable) {
 		this.attackable = attackable;
+	}
+
+	public Image getCastle() {
+		return castle;
+	}
+
+	public void setCastle(Image castle) {
+		this.castle = castle;
 	}
 	
 	
