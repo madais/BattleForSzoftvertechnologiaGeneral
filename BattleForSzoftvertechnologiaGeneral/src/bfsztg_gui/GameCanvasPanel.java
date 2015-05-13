@@ -245,12 +245,37 @@ public class GameCanvasPanel extends JPanel{
 	public void setCells(GraphicCell[][] cells) {
 		this.cells = cells;
 		GameCanvasPanel.this.repaint();
+		System.out.println("After redraw.");
 	}
 
+	public void ClearMarkers(){
+		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
+			 for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){
+				 cells [i][j].setMarker(Marker.NONE);
+			 }
+		 }
+		GameCanvasPanel.this.repaint();
+	}
 	
+	public void RecruitMarkers(boolean leftside){
+		int columnToMark;
+		if (leftside){
+			columnToMark = 0;
+		}
+		else {
+			columnToMark = 23;
+		}
+		for (int i=0;i<gameSettings.MAP_SIZE_Y;i++) {
+			cells[columnToMark][i].setMarker(Marker.MOVEABLE);
+		}
+		GameCanvasPanel.this.repaint();
+	}
 	
-	
-		 
+	public void setSingleMarker(Marker marker, int posX, int posY){		
+		cells[posX][posY].setMarker(marker);		
+		GameCanvasPanel.this.repaint();
+		System.out.println("Cell X " + posX + "Y " + posY + "set to marker"  + marker);
+	}
 	
 	
 	}

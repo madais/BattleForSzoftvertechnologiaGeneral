@@ -8,9 +8,10 @@ public class Area {
 	int team;//ha van rajta egység, akkor melyik csapat-é
 	public int neighbours[][];//szomszédok
 	public int neighnum;//hány szomszédja van
-	int canshoot[][];
+	public int targets[][];
 	int id;
 	boolean shoot;//átlõhetõ-e
+	boolean moveable;
 	Unit gameunit;
 		
 	void findtarget(){//azok a pontok ahova még ellõhet az íjász
@@ -34,6 +35,10 @@ public class Area {
 		else{
 			return false;
 		}
+	}
+	
+	boolean getmoveable(){
+		return moveable;
 	}
 
 	public int getPoz1() {
@@ -76,14 +81,6 @@ public class Area {
 		this.neighnum = neighnum;
 	}
 
-	public int[][] getCanshoot() {
-		return canshoot;
-	}
-
-	public void setCanshoot(int[][] canshoot) {
-		this.canshoot = canshoot;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -106,6 +103,11 @@ public class Area {
 
 	public void setGameunit(Unit gameunit) {
 		this.gameunit = gameunit;
+	}
+	
+	int getneighbours(int i, int j){
+		System.out.println("lekérdezett szomszéd i:"+ i + " j: " + j);
+		return neighbours[i][j];
 	}
 	
 	

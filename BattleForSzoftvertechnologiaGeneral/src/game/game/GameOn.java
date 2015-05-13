@@ -36,13 +36,20 @@ public class GameOn {
 	RecruitType recruitType;
 	boolean p1turn;
 	boolean p2turn;
-	boolean weCanMove;
+	boolean endturn1;
+	boolean endturn2;
+	boolean movephase;
+	int movepoz1;
+	int movepoz2;
+	boolean alreadychoose;
+	boolean notrecruited;
+	boolean alreadychoosenonestack;
 	
-	public enum RecruitType {
+	public enum RecruitType{
 	    NONE, ARCHER, CAVALRY, INFANTRY 
 	}
 	
-	static int dmgcalc() {
+	static int dmgcalc(){
 		Random dec = new Random();
 		int dmg = dec.nextInt(6) + 1;
 		if (dmg == 6) {
@@ -52,12 +59,18 @@ public class GameOn {
 	}
 
 	static void move(Map M, Unit A, int poz1, int poz2) {
-		M.map[A.poz1-1][A.poz2-1].delunit();
+		M.map[A.poz1][A.poz2].setGameunit(null);
 		A.setpoz(poz1,poz2);
-		M.map[A.poz1-1][A.poz2-1].setunit(A.team);
+		//M.map[A.poz1][A.poz2].setunit(A.team);
+		M.map[poz1][poz2].setGameunit(A);
+		if (A.getUnitid()==1 && A.isMoved()==true){
+			A.setdoublemove(true);
+		}
+		A.moved();
+		System.out.println("elmozdult :)");
 	}
 
-	static void attack(Map M, Unit A, Unit B) {
+	void attack(Map M, Unit A, Unit B) {
 		// ha a kõ-papír-olló játék teljesül
 		// lovas üti az íjász
 		// íjász üti a gyalogost
@@ -69,40 +82,76 @@ public class GameOn {
 			// equals-al kellene stringet hasonlítani
 			int dmg = dmgcalc();
 			B.decreasehp(dmg);
+			System.out.println("Támadó egység sebzése:" + dmg);
+			gui.appendToChat("Defender take:" + dmg + "damage\n");
 			if (B.gethp() != 0) {
 				dmg = dmgcalc();
 				A.decreasehp(dmg);
+				System.out.println("Védekezõ egység sebzése:" + dmg);
+				gui.appendToChat("Attacker take:" + dmg + "damage\n");
 			}
 			return;
+		}else{
+			// ha egyik sem élvez elõnyt a másikkal szemben
+			int dmg1 = dmgcalc();
+			int dmg2 = dmgcalc();
+			A.decreasehp(dmg1);
+			B.decreasehp(dmg2);
+			System.out.println("bunyó volt :)");
+			System.out.println("Támadó egység sebzése:" + dmg1);
+			gui.appendToChat("Attacker make:" + dmg2 + "damage\n");
+			System.out.println("védekezõ egység sebzése:" + dmg2);
+			gui.appendToChat("Defender make:" + dmg1 + "damage\n");
 		}
-		// ha egyik sem élvez elõnyt a másikkal szemben
-		int dmg1 = dmgcalc();
-		int dmg2 = dmgcalc();
-		A.decreasehp(dmg1);
-		B.decreasehp(dmg2);
-		if (A.hp==0){
-			M.map[A.poz1-1][A.poz2-1].delunit();
+		A.moved();
+		if (A.hp==0){	
+			M.map[A.poz1-1][A.poz2-1].setGameunit(null);
+			if (p1turn==true){
+				gui.appendToChat("Player 1 lost one stack\n");	
+			}
+			if (p2turn==true){
+				gui.appendToChat("Player 2 lost one stack\n");
+			}
 		}
-		if (B.hp==0){
-			M.map[B.poz1-1][B.poz2-1].delunit();
+		if (B.hp==0){		
+			M.map[B.poz1-1][B.poz2-1].setGameunit(null);
+			if (p1turn==true){
+				gui.appendToChat("Player 2 lost one stack\n");	
+			}
+			if (p2turn==true){
+				gui.appendToChat("Player 1 lost one stack\n");
+			}
 		}
 	}
 	
-	public static void setunittomap(Map M,Team T1,Team T2){
-		for (int i=0; i<6;i++){
-			M.map[T1.units[i].poz2-1][T1.units[i].poz1-1].setunit(T1.units[i].team);
-			M.map[T2.units[i].poz2-1][T2.units[i].poz1-1].setunit(T2.units[i].team);
-		}
-	}
+//	public static void setunittomap(Map M,Team T1,Team T2){
+//		for (int i=0; i<6;i++){
+//			M.map[T1.units[i].poz2-1][T1.units[i].poz1-1].setunit(T1.units[i].team);
+//			M.map[T2.units[i].poz2-1][T2.units[i].poz1-1].setunit(T2.units[i].team);
+//		}
+//	}
 
 	public static void setpoints(Map M, Team T1, Team T2){
 		int t1=0;
 		int t2=0;
-		for (int i=0;i<6;i++){
-			if (T1.units[i].poz1==6 && (T1.units[i].poz2==4 || T1.units[i].poz2==8 || T1.units[i].poz2==12)){
+		if (M.map[5][5].getGameunit()!=null){
+			if (M.map[5][5].getGameunit().getTeam()==1){
 				t1++;
+			}else{
+				t2++;
 			}
-			if (T2.units[i].poz1==6 && (T2.units[i].poz2==4 || T2.units[i].poz2==8 || T2.units[i].poz2==12)){
+		}
+		if (M.map[11][5].getGameunit()!=null){
+			if (M.map[11][5].getGameunit().getTeam()==1){
+				t1++;
+			}else{
+				t2++;
+			}
+		}
+		if (M.map[17][5].getGameunit()!=null){
+			if (M.map[17][5].getGameunit().getTeam()==1){
+				t1++;
+			}else{
 				t2++;
 			}
 		}
@@ -124,33 +173,36 @@ public class GameOn {
 	public static void victory(Team T1, Team T2, int victpoint){
 		if (T1.points>=victpoint){
 			System.out.println("P" + 1 + " is the winner");
+			JOptionPane.showMessageDialog(null, "P" + 1 + " is the winner");	
 		}
 		if (T2.points>=victpoint){
 			System.out.println("P" + 2 + " is the winner");
+			JOptionPane.showMessageDialog(null, "P" + 2 + " is the winner");	
 		}
 	}	
 	
-	public static void newround(Team T1, Team T2){
-		for (int i=0;i<6;i++){
-			T1.units[i].newround();
-			T2.units[i].newround();
+	public static void newround(Map M, Team T1, Team T2){
+		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
+			for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){
+				if (M.map[i][j].getGameunit()!=null){
+					M.map[i][j].getGameunit().setMoved(false);
+				}
+			}
 		}
 	}
 	
-	public static void main(String[] args) {
-		
-		
-		
-	}
+//	public static void main(String[] args) {
+//		
+//		
+//		
+//	}
 
 	public GameOn(GUI gui) {
 		super();
 		this.gui = gui;
 		this.initGame();
 		this.mainGameMethod();
-	}
-	
-	
+	}	
 	
 	private void mainGameMethod() {
 		boolean fin=false;
@@ -158,67 +210,93 @@ public class GameOn {
 		int start = dec.nextInt(2) + 1;
 		System.out.println("Player" + start + " start the game");
 		round=1;
-		boolean endturn1=false;
-		boolean endturn2=false;
+		if (start==1){
+			p1turn=true;
+			p2turn=false;
+		}else{
+			p2turn=true;
+			p1turn=false;
+		}
+		endturn1=false;
+		endturn2=false;
 		boolean endround=false;
-		int id;
-		
-		boolean newstackdone=false;
+		notrecruited=true;
 		while(fin!=true){
 			System.out.println(round + ".round started");
+			gui.appendToChat(round + ".round started\n");
 			while (endround!=true){
-				System.out.println("Player 1's turn");
-				if (start==1 || endturn2==true){
+			//	freshthemap();
+				while (p1turn==true && endturn1==false){
+					gui.appendToChat("Player 1's turn" + "\n");
 					p1turn=true;
 					p2turn=false;
 					while (endturn1!=true){
-						if (round % 5 == 1){
+						if (round % 5 == 0 && notrecruited==true){
 							recruiting = true;
-							recruitType = RecruitType.NONE;
+							movephase=false;		
+							gui.getGameCanvasPanel().RecruitMarkers(true);
+							if (alreadychoose=false){
+								recruitType = RecruitType.NONE;
+								gui.getGameCanvasPanel().RecruitMarkers(true);
+							}
 							gui.enableUnitRecruiting();					
 							//A tábla színezése:
-							GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
-							for (int i=0;i<gameSettings.MAP_SIZE_Y;i++) {
-								cells[0][i].setMarker(Marker.MOVEABLE);
-							}
-							gui.getGameCanvasPanel().setCells(cells);
 						}else {
 							recruiting = false;
 							gui.disableUnitRecruiting();
+							movephase=true;
 							
 						}
 					}
 				}
-				System.out.println("Player 2's turn");
-				while (endturn2!=true){
+				while (p2turn==true && endturn2==false){
+					gui.appendToChat("Player 2's turn" + "\n");
 					p2turn=true;
 					p1turn=false;
-					if (round % 5 == 1){
-						recruiting = true;
-						recruitType = RecruitType.NONE;
-						gui.enableUnitRecruiting();
-						GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
-						for (int i=0;i<10;i++) {
-							cells[gameSettings.MAP_SIZE_X-1][i].setMarker(Marker.MOVEABLE);
+					while(endturn2!=true){
+						if (round % 5 == 0  && notrecruited==true){
+							recruiting = true;						
+							movephase=false;
+							gui.getGameCanvasPanel().RecruitMarkers(false);
+							if (alreadychoose=false){
+								recruitType = RecruitType.NONE;
+								gui.getGameCanvasPanel().RecruitMarkers(false);
+							}
+							gui.enableUnitRecruiting();					
+						}else {
+							recruiting = false;
+							gui.disableUnitRecruiting();
+							movephase=true;
 						}
-						gui.getGameCanvasPanel().setCells(cells);
-					}else {
-						recruiting = false;
-						gui.disableUnitRecruiting();
 					}
 				}
 				if (endturn1==true && endturn2==true){
 					endround=true;
 				}
 			}
-			newround(T1,T2);
-		//	move(M,T1.units[2],6,4);
-		//	move(M,T1.units[3],6,8);
-		//	move(M,T1.units[1],6,12);
-		//	attack(M,T1.units[0],T2.units[1]);
+			newround(M,T1,T2);
 			setpoints(M, T1, T2);
+			gui.appendToChat("Player 1 score:" + T1.getpoints() + "\n");
+			gui.appendToChat("Player 2 score:" + T2.getpoints() + "\n");
 			fin=victorycond(T1, T2, victpoint);
 			round++;
+			if (round%5==1){
+				notrecruited=true;
+			}
+			System.out.println("pontok kiosztása");
+			M.clearneighbour();
+			freshthemap();
+			System.out.println("térkép frissítése");
+			if (start==1){
+				p1turn=true;
+				p2turn=false;
+			}else{
+				p2turn=true;
+				p1turn=false;
+			}
+			endround=false;
+			endturn1=false;
+			endturn2=false;
 		}
 		victory(T1, T2, victpoint);
 		
@@ -243,62 +321,117 @@ public class GameOn {
 	
 	void initTeams(){
 		if(M.map[1][1] == null){
-
 			System.out.println("THIS BULLCRAP IS NULL!!!");
 		}
 		
-		
 //		// TEAM1
-		M.map[1][1].setGameunit(new Cavalary(1, 1, 1)); 
-		M.map[1][9].setGameunit(new Cavalary(1, 9, 1)); 
-		M.map[1][2].setGameunit(new Archer(1, 2, 1)); 
-		M.map[1][9].setGameunit(new Archer(1, 9, 1)); 
-		M.map[1][3].setGameunit(new Pikeman(1, 3, 1)); 
-		M.map[1][8].setGameunit(new Pikeman(1, 8, 1)); 
-		//TEAM2
-		M.map[1][9].setGameunit(new Cavalary(2, 1, gameSettings.MAP_SIZE_X)); 
-		M.map[10][9].setGameunit(new Cavalary(2, 10, gameSettings.MAP_SIZE_X)); 
-		M.map[2][8].setGameunit(new Archer(2, 2, gameSettings.MAP_SIZE_X)); 
-		M.map[9][7].setGameunit(new Archer(2, 9, gameSettings.MAP_SIZE_X)); 
-		M.map[3][6].setGameunit(new Pikeman(2, 3, gameSettings.MAP_SIZE_X)); 
-		M.map[8][5].setGameunit(new Pikeman(2, 8, gameSettings.MAP_SIZE_X)); 
+		
+	//	M.map[0][2].setGameunit(T1.units[1])); 
+		T1.newstack(M, 1, 1, 0, 2);
+		T1.newstack(M, 1, 1, 0, 7);
+		T1.newstack(M, 2, 1, 0, 1);
+		T1.newstack(M, 2, 1, 0, 8);
+		T1.newstack(M, 3, 1, 0, 0);
+		T1.newstack(M, 3, 1, 0, 9);
+		
+		T2.newstack(M, 1, 2, 23, 2);
+		T2.newstack(M, 1, 2, 23, 7);
+		T2.newstack(M, 2, 2, 23, 1);
+		T2.newstack(M, 2, 2, 23, 8);
+		T2.newstack(M, 3, 2, 23, 0);
+		T2.newstack(M, 3, 2, 23, 9);
+		
+		T1.newstack(M, 1, 1, 10, 5);
+		T2.newstack(M, 2, 2, 13, 6);
+		
+//		System.out.println("0 7 szomszésai"+M.map[23][7].getNeighnum());
+//		System.out.println("0 8 szomszésai"+M.map[23][8].getNeighnum());
+//		System.out.println("0 9 szomszésai"+M.map[23][9].getNeighnum());
+		freshthemap();
+		//freshthemap();
+//		for (int i=0;i<24;i++){
+//			for (int j=0;j<10;j++){
+//				M.findneighbour(i+1, j+1);
+//			}
+//		}
+//		System.out.println("0 7 szomszésai" +M.map[23][7].getNeighnum());
+//		System.out.println("0 8 szomszésai" +M.map[23][8].getNeighnum());
+//		System.out.println("0 9 szomszésai" +M.map[23][9].getNeighnum());
+		
+		
+//		M.map[0][7].setGameunit(new Cavalary(1, 7, 0)); 
+//		GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
+//		for (int i=0;i<M.map[1][9].getNeighnum();i++){
+//			cells [M.map[1][9].getNeighbours()[i][0]][M.map[1][9].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
+//		}
+//		gui.getGameCanvasPanel().setCells(cells);
+//		M.map[0][1].setGameunit(new Archer(1, 1, 0)); 
+//		M.map[0][8].setGameunit(new Archer(1, 8, 0)); 
+//		M.map[0][0].setGameunit(new Pikeman(1, 0, 0)); 
+//		for (int i=0;i<M.map[0][8].getNeighnum();i++){
+//			cells [M.map[0][8].getNeighbours()[i][0]][M.map[1][8].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
+//		}
+//		gui.getGameCanvasPanel().setCells(cells);
+//		M.map[0][9].setGameunit(new Pikeman(1, 9, 0)); 
+//		
+//		//TEAM2
+//		M.map[23][7].setGameunit(new Cavalary(2, 7, gameSettings.MAP_SIZE_X-1)); 
+//		M.map[23][2].setGameunit(new Cavalary(2, 2, gameSettings.MAP_SIZE_X-1)); 
+//		M.map[23][1].setGameunit(new Archer(2, 1, gameSettings.MAP_SIZE_X-1)); 
+//		M.map[23][8].setGameunit(new Archer(2, 8, gameSettings.MAP_SIZE_X-1)); 
+//		for (int i=0;i<M.map[23][8].getNeighnum();i++){
+//			cells [M.map[23][8].getNeighbours()[i][0]][M.map[23][8].getNeighbours()[i][1]].setMarker(Marker.ATTACKABLE);
+//		}
+//		gui.getGameCanvasPanel().setCells(cells);
+//		M.map[23][0].setGameunit(new Pikeman(2, 0, gameSettings.MAP_SIZE_X-1)); 
+//		M.map[23][9].setGameunit(new Pikeman(2, 9, gameSettings.MAP_SIZE_X-1)); 
 	}
 	
 	
 	public void thereWasAClick(int clickedX, int clickedY){
+		System.out.println("There was a click.");
 		if (recruiting){
 			if(recruitType == RecruitType.NONE){
-				JOptionPane.showMessageDialog(null, "WTF DO YO WANT TO PUT DOWN???");	
+				JOptionPane.showMessageDialog(null, "First choose recruit type!");	
 			}
 			else{
 				switch (recruitType) {
 				case ARCHER:
 					if (p1turn==true){
-						T1.newstack(2, 1, clickedX, clickedY);
+						T1.newstack(M,2, 1, clickedX, clickedY);	
+						notrecruited=false;
 					}
 					if (p2turn==true){
-						T2.newstack(2, 2, clickedX, clickedY);
+						T2.newstack(M,2, 2, clickedX, clickedY);						
+						notrecruited=false;						
 					}
 					break;
 				case CAVALRY:
 					if (p1turn==true){
-						T1.newstack(1, 1, clickedX, clickedY);
+						T1.newstack(M,1, 1, clickedX, clickedY);
+						notrecruited=false;
 					}
 					if (p2turn==true){
-						T2.newstack(1, 2, clickedX, clickedY);
+						T2.newstack(M,1, 2, clickedX, clickedY);
+						notrecruited=false;
 					}
 					break;
 				case INFANTRY:
 					if (p1turn==true){
-						T1.newstack(3, 1, clickedX, clickedY);
+						T1.newstack(M,3, 1, clickedX, clickedY);
+						notrecruited=false;
 					}
 					if (p2turn==true){
-						T2.newstack(3, 2, clickedX, clickedY);
+						T2.newstack(M,3, 2, clickedX, clickedY);
+						notrecruited=false;
 					}
 					break;					
 				default:
 					break;
 				}
+				gui.getGameCanvasPanel().ClearMarkers();
+				alreadychoose=false;
+				recruiting=false;
 				GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 				for (int i=0;i<10;i++) {					
 					cells[i][0].setMarker(Marker.NONE);
@@ -306,17 +439,72 @@ public class GameOn {
 				gui.getGameCanvasPanel().setCells(cells);
 			}
 			gui.disableUnitRecruiting();
-		} else if( weCanMove){
+		} else if(movephase==true && alreadychoosenonestack==false){
+//			if(M.getArea(clickedX, clickedY).getGameunit()!= null){
+//				System.out.println(M.getArea(clickedX, clickedY).getGameunit());
+//			}
+//			else {
+//				System.out.println("ez bizony null");
+//			}
+	//		System.out.println(M.getArea(clickedX, clickedY).getGameunit().getTeam());
 			 if (M.getArea(clickedX, clickedY).getGameunit()!=null){
-				GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
-				cells [clickedX][clickedY].setMarker(Marker.SELECTED);
-				for (int i=0;i<M.map[clickedX][clickedY].getNeighnum();i++){
-					cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
-				}
-				gui.getGameCanvasPanel().setCells(cells);
+				 if ((M.getArea(clickedX, clickedY).getGameunit().isMoved()==false) && ((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)){
+					GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
+					cells [clickedX][clickedY].setMarker(Marker.SELECTED);
+					System.out.println("szomszédok száma: " + M.map[clickedX][clickedY].getNeighnum());
+					for (int i=0;i<M.map[clickedX][clickedY].getNeighnum();i++){
+						if (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit()==null){//marker==move
+							cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
+						}else if (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit()!=null && (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit().getTeam()!=1 && p1turn==true) || (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit().getTeam()!=2 && p2turn==true)){
+							//market==attack
+							cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.ATTACKABLE);
+						}
+					}
+					movepoz1=clickedX;
+					movepoz2=clickedY;
+					alreadychoosenonestack=true;
+					gui.getGameCanvasPanel().setCells(cells);
+				 }
 			 }
-			
+			 else{
+				 JOptionPane.showMessageDialog(null, "Choose one stack of your army!");	
+			 }
+		} else if (movephase==true && alreadychoosenonestack==true){
+			if (movepoz1==clickedX && movepoz2==clickedY){
+			//	GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
+				movepoz1=0;
+				movepoz2=0;
+				alreadychoosenonestack=false;
+				gui.getGameCanvasPanel().ClearMarkers();
+			}else if (M.getArea(clickedX, clickedY).getGameunit()==null){
+				 GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
+				 if (cells [clickedX][clickedY].getMarker()==Marker.MOVEABLE){
+					 move(M,M.map[movepoz1][movepoz2].getGameunit(),clickedX,clickedY);
+				 }
+				 gui.getGameCanvasPanel().ClearMarkers();
+			//	 gui.getGameCanvasPanel().setCells(cells);
+				 alreadychoosenonestack=false;
+				 gui.getGameCanvasPanel().setCells(M.toGraphicCellArray()); 
+//				 cells= gui.getGameCanvasPanel().getCells();
+//				 gui.getGameCanvasPanel().setCells(cells);
+				 //refres gui
+			 }else if (M.getArea(clickedX, clickedY).getGameunit()!=null){
+				 if (((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)){
+					 GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
+					 if (cells [clickedX][clickedY].getMarker()==Marker.ATTACKABLE){
+						 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit());
+					 }	
+					 gui.getGameCanvasPanel().ClearMarkers();
+					 //refresh gui
+					 alreadychoosenonestack=false;
+					 gui.getGameCanvasPanel().setCells(M.toGraphicCellArray()); 
+//					 cells= gui.getGameCanvasPanel().getCells();
+//					 gui.getGameCanvasPanel().setCells(cells);
+				//	 gui.getGameCanvasPanel().setCells(cells);
+				 }
+			 }
 		}
+		System.out.println("End of click, redrawing cells.");
 	}
 
 	public GUI getGui() {
@@ -378,6 +566,8 @@ public class GameOn {
 	public void InfrantryIsTheRecruit() {
 		if (recruiting == true){
 			recruitType = RecruitType.INFANTRY;	
+			alreadychoose=true;
+			gui.appendToChat("Choosen recruit type: pikeman");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
@@ -387,6 +577,8 @@ public class GameOn {
 	public void CavalryIsTheRecruit() {
 		if (recruiting == true){
 			recruitType = RecruitType.CAVALRY;	
+			alreadychoose=true;
+			gui.appendToChat("Choosen recruit type: cavalry");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
@@ -396,6 +588,8 @@ public class GameOn {
 	public void ArcherIsTheRecruit() {
 		if (recruiting == true){
 			recruitType = RecruitType.ARCHER;	
+			alreadychoose=true;
+			gui.appendToChat("Choosen recruit type: archer");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
@@ -404,7 +598,25 @@ public class GameOn {
 
 	public void EndTurn() {
 		p1turn=!p1turn;
+		if (p1turn==false){
+			endturn1=true;
+		}
 		p2turn=!p2turn;
+		if (p2turn==false){
+			endturn2=true;
+		}
 	}
+	
+	void freshthemap(){
+		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
+			for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){
+//				if (M.map[i][j].getGameunit()!=null){
+					M.findneighbour(i+1, j+1);
+//				}
+			}
+		}
+	}
+	
+	
 	
 }

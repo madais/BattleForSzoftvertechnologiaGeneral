@@ -9,5 +9,6 @@ public class Water extends Area{
 		this.poz2=poz2;
 		this.shoot=true;
 		this.gameunit=unit;
+		this.moveable=false;
 	}
 }

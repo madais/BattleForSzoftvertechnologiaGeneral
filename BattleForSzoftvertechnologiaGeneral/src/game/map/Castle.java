@@ -9,5 +9,6 @@ public class Castle extends Area{
 		this.poz2=poz2;
 		this.shoot=false;
 		this.gameunit=unit;
+		this.moveable=true;
 	}
 }

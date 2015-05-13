@@ -114,7 +114,9 @@ public class Unit {
 	public void setArea(Area area) {
 		this.area = area;
 	}
-	
+
+	public void setdoublemove(boolean b){}
+
 	
 	
 }
