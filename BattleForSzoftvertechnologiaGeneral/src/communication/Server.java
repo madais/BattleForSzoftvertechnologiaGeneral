@@ -21,6 +21,7 @@ public class Server extends Communication implements Runnable{
 	BufferedOutputStream server_out=null;
 	
 	ArrayList<Runnable> run_list=new ArrayList<Runnable>();
+	ArrayList<String> client_list=new ArrayList<String>();
 	
 	public void run() {
 		// TODO Auto-generated method stub
@@ -56,6 +57,7 @@ public class Server extends Communication implements Runnable{
 		this.serversocket = new java.net.ServerSocket(DEFAULTPORT);
 		if (DEBUG){
 			System.out.println("Server socket created:" + this.serversocket.getLocalPort());
+			client_list.add(String.valueOf(this.serversocket.getLocalPort()));
 		}
 	}
 	
@@ -66,6 +68,7 @@ public class Server extends Communication implements Runnable{
 		
 		if (DEBUG){
 			System.out.println("Server socket created:" + this.serversocket.getLocalPort());
+			client_list.add(String.valueOf(this.serversocket.getLocalPort()));
 		}
 	}
 	

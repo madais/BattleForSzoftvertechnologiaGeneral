@@ -46,6 +46,7 @@ public class HostMenuAction extends AbstractAction {
 	    	try{
 	    	  Communication.start_server(inputValue);
 	    	  Communication.subscribe_message(this.parent);
+	    	  //Communication.send_message("Ez a cim: " + Communication.getlocalport());;
 	    	  parent.getBtnSend().addActionListener(new SendChatActionListener(parent)); 
 	    	}
 	    	catch (Exception ex){

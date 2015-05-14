@@ -89,4 +89,13 @@ public abstract class Communication {
 		client.subscribe_table(listener);
 	}
 
+	public static ArrayList<String> get_clients(){
+		ArrayList<String> client_list=null;
+		
+		return client_list;
+	}
+	
+	public static String getlocalport(){
+		return client.client_socket.getLocalSocketAddress().toString();
+	}
 }
