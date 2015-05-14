@@ -37,7 +37,7 @@ public class Map {
 			Random dec = new Random();
 			int row=dec.nextInt(gameSettings.MAP_SIZE_X-2)+2;
 			int column=dec.nextInt(gameSettings.MAP_SIZE_Y)+1;
-			if (column!=6 || (row!=4 && row!=8 && row!=12)){
+			if (column!=6 || (row!=6 && row!=12 && row!=18)){
 				map[row-1][column-1]=new Water(row,column,null);
 			}
 		}
@@ -46,7 +46,7 @@ public class Map {
 			Random dec = new Random();
 			int row=dec.nextInt(gameSettings.MAP_SIZE_X-2)+2;
 			int column=dec.nextInt(gameSettings.MAP_SIZE_Y)+1;
-			if (column!=6 || (row!=4 && row!=8 && row!=12)){
+			if (column!=6 || (row!=6 && row!=12 && row!=18)){
 				map[row-1][column-1]=new Forest(row,column,null);
 			}
 		}
@@ -55,7 +55,7 @@ public class Map {
 			Random dec = new Random();
 			int row=dec.nextInt(gameSettings.MAP_SIZE_X-2)+2;
 			int column=dec.nextInt(gameSettings.MAP_SIZE_Y)+1;
-			if (column!=6 || (row!=4 && row!=8 && row!=12)){
+			if (column!=6 || (row!=6 && row!=12 && row!=18)){
 				map[row-1][column-1]=new Mountain(row,column,null);
 			}
 		}
@@ -64,7 +64,7 @@ public class Map {
 			Random dec = new Random();
 			int row=dec.nextInt(gameSettings.MAP_SIZE_X-2)+2;
 			int column=dec.nextInt(gameSettings.MAP_SIZE_Y)+1;
-			if (column!=6 || (row!=4 && row!=8 && row!=12)){
+			if (column!=6 || (row!=6 && row!=18 && row!=12)){
 				map[row-1][column-1]=new Desert(row,column,null);
 			}
 		}
@@ -73,16 +73,16 @@ public class Map {
 			Random dec = new Random();
 			int row=dec.nextInt(gameSettings.MAP_SIZE_X-2)+2;
 			int column=dec.nextInt(gameSettings.MAP_SIZE_Y)+1;
-			if (column!=6 || (row!=4 && row!=8 && row!=12)){
+			if (column!=6 || (row!=6 && row!=18 && row!=12)){
 				map[row-1][column-1]=new Swamp(row,column,null);
 			}
 		}
 		
-		for (int row=1 ; row <= gameSettings.MAP_SIZE_X ; row++ ){
-			for ( int column=1 ; column <= gameSettings.MAP_SIZE_Y ; column++ ){
-				findneighbour(row,column);
-			}
-		}
+//		for (int row=1 ; row <= gameSettings.MAP_SIZE_X ; row++ ){
+//			for ( int column=1 ; column <= gameSettings.MAP_SIZE_Y ; column++ ){
+//				findneighbour(row,column);
+//			}
+//		}
 		
 		for ( int row=1 ; row <= gameSettings.MAP_SIZE_X ; row++ ){
 			for ( int column=1 ; column <= gameSettings.MAP_SIZE_Y ; column++ )	{
@@ -120,115 +120,235 @@ public class Map {
 		}
 	}
 	
-	void printneigh(int row, int column){
-		System.out.print("masik fv");
-		for (int i=0; i<6; i++){
-				System.out.print(map[row-1][column-1].neighbours[i][0]);
-				System.out.println(map[row-1][column-1].neighbours[i][1]);
+	public void printneigh(int row, int column){
+		for (int i=0; i<map[row][column].getNeighnum(); i++){
+				System.out.print(map[row][column].neighbours[i][0]);
+				System.out.println(map[row][column].neighbours[i][1]);
 		}
 	}
 	
 	public void clearneighbour(){
 		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
 			for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){
-				map[i][j].neighnum=0;
+				if (map[i][j].neighnum!=0){
+					map[i][j].delneigs();
+				}				
 			}
 		}
 	}
 	
 	public void findneighbour(int row, int column){
-		int neigh[][];
-		int cavnum=0;
-//		if(map[row-1][column-1].gameunit!=null){
-//			if (map[row-1][column-1].gameunit.getUnitid()!=3){
-//				neigh = new int [6][2];
+		map[row][column].setNeighnum(0);
+		map[row][column].neighbours=new int[6][2];
+		if (row%2==1){
+			if (map[row][column].gameunit!=null){
+				if (row!=0){
+					if (map[row-1][column].getmoveable()==true){
+						map[row][column].neighbours[map[row][column].getNeighnum()][0]=row-1;
+						map[row][column].neighbours[map[row][column].getNeighnum()][1]=column;
+						map[row][column].neighnum++;
+					}
+				}
+				if (row!=0 && column!=(gameSettings.MAP_SIZE_Y-1)){
+					if (map[row-1][column+1].getmoveable()==true){
+						map[row][column].neighbours[map[row][column].getNeighnum()][0]=row-1;
+						map[row][column].neighbours[map[row][column].getNeighnum()][1]=column+1;
+						map[row][column].neighnum++;
+					}
+				}
+				if (column!=0){
+					if (map[row][column-1].getmoveable()==true){
+						map[row][column].neighbours[map[row][column].getNeighnum()][0]=row;
+						map[row][column].neighbours[map[row][column].getNeighnum()][1]=column-1;
+						map[row][column].neighnum++;
+					}
+				}
+				if (column!=(gameSettings.MAP_SIZE_Y-1)){
+					if (map[row][column+1].getmoveable()==true){
+						map[row][column].neighbours[map[row][column].getNeighnum()][0]=row;
+						map[row][column].neighbours[map[row][column].getNeighnum()][1]=column+1;
+						map[row][column].neighnum++;
+					}
+				}
+				if (row!=(gameSettings.MAP_SIZE_X-1)){
+					if (map[row+1][column].getmoveable()==true){
+						map[row][column].neighbours[map[row][column].getNeighnum()][0]=row+1;
+						map[row][column].neighbours[map[row][column].getNeighnum()][1]=column;
+						map[row][column].neighnum++;
+					}
+				}
+				if (row!=(gameSettings.MAP_SIZE_X-1) && column!=(gameSettings.MAP_SIZE_Y-1)){
+					if (map[row+1][column+1].getmoveable()==true){
+						map[row][column].neighbours[map[row][column].getNeighnum()][0]=row+1;
+						map[row][column].neighbours[map[row][column].getNeighnum()][1]=column+1;
+						map[row][column].neighnum++;
+					}
+				}
+			}
+		}
+		else{
+			if (row!=0){
+				if (map[row-1][column].getmoveable()==true){
+					map[row][column].neighbours[map[row][column].getNeighnum()][0]=row-1;
+					map[row][column].neighbours[map[row][column].getNeighnum()][1]=column;
+					map[row][column].neighnum++;
+				}
+			}
+			if (row!=0 && column!=0){
+				if (map[row-1][column-1].getmoveable()==true){
+					map[row][column].neighbours[map[row][column].getNeighnum()][0]=row-1;
+					map[row][column].neighbours[map[row][column].getNeighnum()][1]=column-1;
+					map[row][column].neighnum++;
+				}
+			}
+			if (column!=0){
+				if (map[row][column-1].getmoveable()==true){
+					map[row][column].neighbours[map[row][column].getNeighnum()][0]=row;
+					map[row][column].neighbours[map[row][column].getNeighnum()][1]=column-1;
+					map[row][column].neighnum++;
+				}
+			}
+			if (column!=(gameSettings.MAP_SIZE_Y-1)){
+				if (map[row][column+1].getmoveable()==true){
+					map[row][column].neighbours[map[row][column].getNeighnum()][0]=row;
+					map[row][column].neighbours[map[row][column].getNeighnum()][1]=column+1;
+					map[row][column].neighnum++;
+				}
+			}
+			if (row!=(gameSettings.MAP_SIZE_X-1)){
+				if (map[row+1][column].getmoveable()==true){
+					map[row][column].neighbours[map[row][column].getNeighnum()][0]=row+1;
+					map[row][column].neighbours[map[row][column].getNeighnum()][1]=column;
+					map[row][column].neighnum++;
+				}
+			}
+			if (row!=(gameSettings.MAP_SIZE_X-1) && column!=0){
+				if (map[row+1][column-1].getmoveable()==true){
+					map[row][column].neighbours[map[row][column].getNeighnum()][0]=row+1;
+					map[row][column].neighbours[map[row][column].getNeighnum()][1]=column-1;
+					map[row][column].neighnum++;
+				}
+			}
+		}
+		
+		
+//		neigh=new int[18][2];
+//		int neighnum=0;
+//		if (row!=1){
+//			if (map[row-2][column-1].getmoveable()==true){
+//				neigh[neighnum][0]=row-1;
+//				neigh[neighnum][1]=column;
+//				neighnum++;
 //			}
-//			else{
-//				neigh = new int [18][2];
+//		}
+//		if (column!=1){
+//			if (map[row-1][column-2].getmoveable()==true){
+//				neigh[neighnum][0]=row;
+//				neigh[neighnum][1]=column-1;
+//				neighnum++;
+//			}
+//		}
+//		if (row!=gameSettings.MAP_SIZE_X){
+//			if (map[row][column-1].getmoveable()==true){
+//				neigh[neighnum][0]=row+1;
+//				neigh[neighnum][1]=column;
+//				neighnum++;
+//			}
+//		}
+//		if (map[row-1][column-1].getGameunit()!=null){
+//			if (map[row-1][column-1].getGameunit().getteam()==1){
+//				if (row!=gameSettings.MAP_SIZE_X && column!=1){
+//					if (map[row][column-2].getmoveable()==true){
+//						neigh[neighnum][0]=row+1;
+//						neigh[neighnum][1]=column-1;
+//						neighnum++;
+//					}
+//				}
+//			}else{
+//				if (row!=gameSettings.MAP_SIZE_X && column!=gameSettings.MAP_SIZE_Y){
+//					if (map[row][column-2].getmoveable()==true){
+//						neigh[neighnum][0]=row+1;
+//						neigh[neighnum][1]=column+1;
+//						neighnum++;
+//					}
+//				}
+//			}
+//		}
+//		if (column!=gameSettings.MAP_SIZE_Y){
+//			if (map[row-1][column].getmoveable()==true){
+//				neigh[neighnum][0]=row;//b
+//				neigh[neighnum][1]=column+1;
+//				neighnum++;
+//			}
+//		}
+//		if (map[row-1][column-1].getGameunit()!=null){
+//			if (map[row-1][column-1].getGameunit().getteam()==1){
+//				if (row!=1 && column!=1){
+//					if (map[row-2][column-2].getmoveable()==true){
+//						neigh[neighnum][0]=row-1;//bf
+//						neigh[neighnum][1]=column-1;
+//						neighnum++;
+//					}
+//				}
+//			}else {
+//				if (row!=1 && column!=gameSettings.MAP_SIZE_Y){
+//					if (map[row-2][column].getmoveable()==true){
+//						neigh[neighnum][0]=row-1;//bf
+//						neigh[neighnum][1]=column+1;
+//						neighnum++;
+//					}
+//				}
+//			}
+//		}
+////		map[row-1][column-1].neighbours= new int[neighnum][2];
+////		map[row-1][column-1].neighnum=neighnum;
+////		for (int i=0;i<neighnum;i++){
+////			map[row-1][column-1].neighbours[i][0]=neigh[i][0]-1;
+////			map[row-1][column-1].neighbours[i][1]=neigh[i][1]-1;
+////		}
+//		if (map[row-1][column-1].gameunit!=null){
+//			if (map[row-1][column-1].gameunit.getUnitid()!=3){
+//				for (int i=0;i<map[row-1][column-1].getNeighnum();i++){
+////					for (int j=0;j<map[map[row-1][column-1].getneighbours(i, 0)][map[row-1][column-1].getneighbours(i, 1)].getNeighnum();j++){
+////						neigh[neighnum][0]=row;
+////						neigh[neighnum][1]=column-1;
+////						neighnum++;
+////						cavnum++;
+////					}
+//				}
+//			}
+//			if (map[row-1][column-1].gameunit.getUnitid()==1){
+//				map[row-1][column-1].neighbours=new int [neighnum][2];
+//				map[row-1][column-1].setNeighnum(neighnum);
+//				for (int i=0;i<neighnum;i++){
+//					map[row-1][column-1].neighbours[i][0]=neigh[i][0]-1;
+//					map[row-1][column-1].neighbours[i][1]=neigh[i][1]-1;
+//				}
+//			}else{
+//				map[row-1][column-1].neighbours=new int [neighnum-cavnum][2];
+//				map[row-1][column-1].setNeighnum(neighnum-cavnum);
+//				for (int i=0;i<neighnum-cavnum;i++){
+//					map[row-1][column-1].neighbours[i][0]=neigh[i][0]-1;
+//					map[row-1][column-1].neighbours[i][1]=neigh[i][1]-1;
+//				}
+//			}
+//			if (map[row-1][column-1].gameunit.getUnitid()==2){
+//				map[row-1][column-1].targets=new int [cavnum][2];
+//				for (int i=0;i<cavnum;i++){
+//					if (map[map[row-1][column-1].getneighbours(i, 0)][map[row-1][column-1].getneighbours(i, 1)].isShoot()==true){
+//						map[row-1][column-1].targets[i][0]=neigh[i][0]-1;
+//						map[row-1][column-1].targets[i][1]=neigh[i][1]-1;
+//					}
+//				}
 //			}
 //		}else{
-//			neigh=new int[6][2];
+//			map[row-1][column-1].neighbours= new int[neighnum][2];
+//			map[row-1][column-1].neighnum=neighnum;
+//			for (int i=0;i<neighnum;i++){
+//				map[row-1][column-1].neighbours[i][0]=neigh[i][0]-1;
+//				map[row-1][column-1].neighbours[i][1]=neigh[i][1]-1;
+//			}
 //		}
-		neigh=new int[18][2];
-		int neighnum=0;
-		if (row!=1 && column!=1){
-			if (map[row-2][column-2].getmoveable()==true){
-				neigh[neighnum][0]=row-1;
-				neigh[neighnum][1]=column-1;
-				neighnum++;
-			}
-		}
-		if (row!=1 && column!=gameSettings.MAP_SIZE_Y){
-			if (map[row-2][column-1].getmoveable()==true){
-				neigh[neighnum][0]=row-1;
-				neigh[neighnum][1]=column;
-				neighnum++;
-			}
-		}
-		if (column!=gameSettings.MAP_SIZE_Y){
-			if (map[row-1][column].getmoveable()==true){
-				neigh[neighnum][0]=row;
-				neigh[neighnum][1]=column+1;
-				neighnum++;
-			}
-		}
-		if (row!=gameSettings.MAP_SIZE_X && column!=gameSettings.MAP_SIZE_Y){
-			if (map[row][column-1].getmoveable()==true){
-				neigh[neighnum][0]=row+1;
-				neigh[neighnum][1]=column;
-				neighnum++;
-			}
-		}
-		if (row!=gameSettings.MAP_SIZE_X && column!=1){
-			if (map[row][column-2].getmoveable()==true){
-				neigh[neighnum][0]=row+1;
-				neigh[neighnum][1]=column-1;
-				neighnum++;
-			}
-		}
-		if (column!=1){
-			if (map[row-1][column-2].getmoveable()==true){
-				neigh[neighnum][0]=row;
-				neigh[neighnum][1]=column-1;
-				neighnum++;
-			}
-		}
-		if (map[row-1][column-1].gameunit!=null){
-			if (map[row-1][column-1].gameunit.getUnitid()!=3){
-				for (int i=0;i<map[row-1][column-1].getNeighnum();i++){
-					for (int j=0;j<map[map[row-1][column-1].getneighbours(i, 0)][map[row-1][column-1].getneighbours(i, 1)].getNeighnum();j++){
-						neigh[neighnum][0]=row;
-						neigh[neighnum][1]=column-1;
-						neighnum++;
-						cavnum++;
-					}
-				}
-			}
-			if (map[row-1][column-1].gameunit.getUnitid()==1){
-				map[row-1][column-1].neighbours=new int [neighnum][2];
-				map[row-1][column-1].setNeighnum(neighnum);
-				for (int i=0;i<neighnum;i++){
-					map[row-1][column-1].neighbours[i][0]=neigh[i][0]-1;
-					map[row-1][column-1].neighbours[i][1]=neigh[i][1]-1;
-				}
-			}else{
-				map[row-1][column-1].neighbours=new int [neighnum-cavnum][2];
-				map[row-1][column-1].setNeighnum(neighnum-cavnum);
-				for (int i=0;i<neighnum-cavnum;i++){
-					map[row-1][column-1].neighbours[i][0]=neigh[i][0]-1;
-					map[row-1][column-1].neighbours[i][1]=neigh[i][1]-1;
-				}
-			}
-			if (map[row-1][column-1].gameunit.getUnitid()==2){
-				map[row-1][column-1].targets=new int [neighnum][2];
-				for (int i=0;i<neighnum;i++){
-					if (map[map[row-1][column-1].getneighbours(i, 0)][map[row-1][column-1].getneighbours(i, 1)].isShoot()==true){
-						map[row-1][column-1].targets[i][0]=neigh[i][0]-1;
-						map[row-1][column-1].targets[i][1]=neigh[i][1]-1;
-					}
-				}
-			}
-		}
 	}
 	
 	
@@ -267,7 +387,7 @@ public class Map {
 						break;
 				case 4: result[row][column] = new GraphicCell(Terrain.MOUNTAINS);
 						break;
-				case 5: result[row][column] = new GraphicCell(Terrain.SNOW);
+				case 5: result[row][column] = new GraphicCell(Terrain.CASTLE);
 						break;
 				case 6: result[row][column] = new GraphicCell(Terrain.DESERT);
 						break;

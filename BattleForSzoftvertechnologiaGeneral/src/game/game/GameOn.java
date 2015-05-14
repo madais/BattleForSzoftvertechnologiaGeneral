@@ -105,7 +105,7 @@ public class GameOn {
 		}
 		A.moved();
 		if (A.hp==0){	
-			M.map[A.poz1-1][A.poz2-1].setGameunit(null);
+			M.map[A.poz1][A.poz2].setGameunit(null);
 			if (p1turn==true){
 				gui.appendToChat("Player 1 lost one stack\n");	
 			}
@@ -114,7 +114,7 @@ public class GameOn {
 			}
 		}
 		if (B.hp==0){		
-			M.map[B.poz1-1][B.poz2-1].setGameunit(null);
+			M.map[B.poz1][B.poz2].setGameunit(null);
 			if (p1turn==true){
 				gui.appendToChat("Player 2 lost one stack\n");	
 			}
@@ -122,6 +122,8 @@ public class GameOn {
 				gui.appendToChat("Player 1 lost one stack\n");
 			}
 		}
+		M.clearneighbour();
+		freshthemap();
 	}
 	
 //	public static void setunittomap(Map M,Team T1,Team T2){
@@ -230,6 +232,9 @@ public class GameOn {
 					gui.appendToChat("Player 1's turn" + "\n");
 					p1turn=true;
 					p2turn=false;
+					if (round%5==0){
+						notrecruited=true;
+					}
 					while (endturn1!=true){
 						if (round % 5 == 0 && notrecruited==true){
 							recruiting = true;
@@ -253,6 +258,9 @@ public class GameOn {
 					gui.appendToChat("Player 2's turn" + "\n");
 					p2turn=true;
 					p1turn=false;
+					if (round%5==0){
+						notrecruited=true;
+					}
 					while(endturn2!=true){
 						if (round % 5 == 0  && notrecruited==true){
 							recruiting = true;						
@@ -432,6 +440,7 @@ public class GameOn {
 				gui.getGameCanvasPanel().ClearMarkers();
 				alreadychoose=false;
 				recruiting=false;
+				gui.getGameCanvasPanel().setCells(M.toGraphicCellArray()); 
 				GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 				for (int i=0;i<10;i++) {					
 					cells[i][0].setMarker(Marker.NONE);
@@ -457,12 +466,18 @@ public class GameOn {
 							cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
 						}else if (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit()!=null && (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit().getTeam()!=1 && p1turn==true) || (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit().getTeam()!=2 && p2turn==true)){
 							//market==attack
-							cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.ATTACKABLE);
+						//	if (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit()!=null){
+								cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.ATTACKABLE);
+//							}
+//							else{
+//								cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
+//							}
 						}
 					}
 					movepoz1=clickedX;
 					movepoz2=clickedY;
 					alreadychoosenonestack=true;
+					M.printneigh(clickedX,clickedY);
 					gui.getGameCanvasPanel().setCells(cells);
 				 }
 			 }
@@ -611,7 +626,7 @@ public class GameOn {
 		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
 			for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){
 //				if (M.map[i][j].getGameunit()!=null){
-					M.findneighbour(i+1, j+1);
+					M.findneighbour(i, j);
 //				}
 			}
 		}

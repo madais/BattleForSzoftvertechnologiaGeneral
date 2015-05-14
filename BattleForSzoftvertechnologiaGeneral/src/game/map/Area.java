@@ -106,8 +106,16 @@ public class Area {
 	}
 	
 	int getneighbours(int i, int j){
-		System.out.println("lekérdezett szomszéd i:"+ i + " j: " + j);
+//		System.out.println("lekérdezett szomszéd i:"+ i + " j: " + j);
 		return neighbours[i][j];
+	}
+
+	public void delneigs() {
+		for (int i=0;i<neighnum;i++){
+			neighbours[i][0]=0;
+			neighbours[i][1]=0;
+		}
+		neighnum=0;
 	}
 	
 	
