@@ -70,11 +70,18 @@ public class GameOn {
 		System.out.println("elmozdult :)");
 	}
 
-	void attack(Map M, Unit A, Unit B) {
+	void attack(Map M, Unit A, Unit B, boolean longshoot) {
 		// ha a kõ-papír-olló játék teljesül
 		// lovas üti az íjász
 		// íjász üti a gyalogost
 		// gyalogos üti a lovast
+		if (A.unitid==2 && longshoot==true){
+			int dmg=dmgcalc();
+			B.decreasehp(dmg);
+			System.out.println("Támadó egység sebzése:" + dmg);
+			gui.appendToChat("Archer make:" + dmg + "damage\n");
+			return;
+		}
 		if ((A.unitid == 1 && B.unitid == 2)
 				|| (A.unitid == 2 && B.unitid == 3)
 				|| (A.unitid == 3 && B.unitid == 1)) {
@@ -132,6 +139,7 @@ public class GameOn {
 //			M.map[T2.units[i].poz2-1][T2.units[i].poz1-1].setunit(T2.units[i].team);
 //		}
 //	}
+
 
 	public static void setpoints(Map M, Team T1, Team T2){
 		int t1=0;
@@ -474,6 +482,15 @@ public class GameOn {
 //							}
 						}
 					}
+					if (M.map[clickedX][clickedY].getGameunit().getUnitid()==2){
+						for (int i=0;i<M.map[clickedX][clickedY].getTargetnum();i++){
+							if (M.map[M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].getGameunit()!=null) {
+								if ((M.map[M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].getGameunit().getteam()==1 && p2turn==true) || (M.map[M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].getGameunit().getteam()==2 && p1turn==true)){
+									cells [M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].setMarker(Marker.ATTACKABLE);
+								}
+							}
+						}
+					}
 					movepoz1=clickedX;
 					movepoz2=clickedY;
 					alreadychoosenonestack=true;
@@ -508,8 +525,16 @@ public class GameOn {
 				 if (((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)){
 					 GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 					 if (cells [clickedX][clickedY].getMarker()==Marker.ATTACKABLE){
-						 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit());
-					 }	
+						 if (M.map[movepoz1][movepoz2].getGameunit().getUnitid()==2){
+							 if (M.map[movepoz1][movepoz2].isneighbour(clickedX,clickedY)){
+								 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit(),false);
+							 }else{
+								 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit(),true);
+							 }
+						 }else{
+							 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit(),false);
+						 }
+					 }
 					 gui.getGameCanvasPanel().ClearMarkers();
 					 //refresh gui
 					 alreadychoosenonestack=false;
