@@ -279,9 +279,9 @@ public class Map {
 							map[row][column].neighnum++;
 						}
 					}
-					if (map[row][column].getneighbours(i, 0)!=gameSettings.MAP_SIZE_X-1 && map[row][column].getneighbours(i, 1)!=0){
-						if (map[map[row][column].getneighbours(i, 0)+1][map[row][column].getneighbours(i, 1)-1].getmoveable()==true){
-							map[row][column].neighbours[map[row][column].getNeighnum()][0]=map[row][column].getneighbours(i, 0)+1;
+					if (map[row][column].getneighbours(i, 1)!=0){
+						if (map[map[row][column].getneighbours(i, 0)][map[row][column].getneighbours(i, 1)-1].getmoveable()==true){
+							map[row][column].neighbours[map[row][column].getNeighnum()][0]=map[row][column].getneighbours(i, 0);
 							map[row][column].neighbours[map[row][column].getNeighnum()][1]=map[row][column].getneighbours(i, 1)-1;
 							map[row][column].neighnum++;
 						}

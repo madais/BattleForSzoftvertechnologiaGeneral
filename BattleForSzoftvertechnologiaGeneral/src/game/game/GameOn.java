@@ -80,9 +80,9 @@ public class GameOn {
 			B.decreasehp(dmg);
 			System.out.println("Támadó egység sebzése:" + dmg);
 			gui.appendToChat("Archer make:" + dmg + "damage\n");
-			return;
-		}
-		if ((A.unitid == 1 && B.unitid == 2)
+//			A.moved();
+//			return;
+		}else if ((A.unitid == 1 && B.unitid == 2)
 				|| (A.unitid == 2 && B.unitid == 3)
 				|| (A.unitid == 3 && B.unitid == 1)) {
 			// getClass vagy gettype megkeresése, olvashatóság miatt
@@ -97,7 +97,8 @@ public class GameOn {
 				System.out.println("Védekezõ egység sebzése:" + dmg);
 				gui.appendToChat("Attacker take:" + dmg + "damage\n");
 			}
-			return;
+//			A.moved();
+//			return;
 		}else{
 			// ha egyik sem élvez elõnyt a másikkal szemben
 			int dmg1 = dmgcalc();
@@ -465,8 +466,9 @@ public class GameOn {
 //			}
 	//		System.out.println(M.getArea(clickedX, clickedY).getGameunit().getTeam());
 			 if (M.getArea(clickedX, clickedY).getGameunit()!=null){
-				 if ((M.getArea(clickedX, clickedY).getGameunit().isMoved()==false) && ((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)){
-					GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
+				 if ((M.getArea(clickedX, clickedY).getGameunit().isMoved()==false) && (((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2))){
+					System.out.println("kattintás után: " + M.getArea(clickedX, clickedY).getGameunit().isMoved());
+					 GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 					cells [clickedX][clickedY].setMarker(Marker.SELECTED);
 					System.out.println("szomszédok száma: " + M.map[clickedX][clickedY].getNeighnum());
 					for (int i=0;i<M.map[clickedX][clickedY].getNeighnum();i++){
@@ -536,6 +538,8 @@ public class GameOn {
 						 }
 					 }
 					 gui.getGameCanvasPanel().ClearMarkers();
+//					 M.map[movepoz1][movepoz2].getGameunit().moved=true;
+//					 System.out.println("támadás után:" + M.getArea(movepoz1, movepoz2).getGameunit().isMoved());
 					 //refresh gui
 					 alreadychoosenonestack=false;
 					 gui.getGameCanvasPanel().setCells(M.toGraphicCellArray()); 
