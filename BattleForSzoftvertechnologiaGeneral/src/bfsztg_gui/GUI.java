@@ -18,6 +18,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -37,6 +38,7 @@ public class GUI implements MsgListener {
 	JButton btnCavalry;
 	JButton btnEndTurn;
 	JButton btnSend;
+	JScrollPane txtrChattextareaScroll;
 	
 	/**
 	 * Launch the application.
@@ -144,7 +146,7 @@ public class GUI implements MsgListener {
 		txtrChattextarea.setEditable(false);
 		txtrChattextarea.setRows(5);
 		txtrChattextarea.setText("initializing...\n");
-		JScrollPane txtrChattextareaScroll = new JScrollPane(txtrChattextarea);
+		txtrChattextareaScroll = new JScrollPane(txtrChattextarea);
 		txtrChattextareaScroll
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		chatPanel.add(txtrChattextareaScroll, BorderLayout.NORTH);
@@ -287,7 +289,9 @@ public class GUI implements MsgListener {
 	public void appendToChat(String string) {
 		if (getTxtrChattextarea() != null) {
 			getTxtrChattextarea().append(string);
-		}
+			JScrollBar scrollbar = getTxtrChattextareaScroll().getVerticalScrollBar();
+			scrollbar.setValue(scrollbar.getMaximum());
+		}		
 	}
 
 	public GameCanvasPanel getGameCanvasPanel() {
@@ -355,6 +359,14 @@ public class GUI implements MsgListener {
 
 	public void setBtnSend(JButton btnSend) {
 		this.btnSend = btnSend;
+	}
+
+	public JScrollPane getTxtrChattextareaScroll() {
+		return txtrChattextareaScroll;
+	}
+
+	public void setTxtrChattextareaScroll(JScrollPane txtrChattextareaScroll) {
+		this.txtrChattextareaScroll = txtrChattextareaScroll;
 	}
 	
 	

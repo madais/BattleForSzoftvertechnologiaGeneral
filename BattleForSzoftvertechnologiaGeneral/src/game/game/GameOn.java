@@ -504,6 +504,7 @@ public class GameOn {
 //				 gui.getGameCanvasPanel().setCells(cells);
 				 //refres gui
 			 }else if (M.getArea(clickedX, clickedY).getGameunit()!=null){
+				 //ha p1turn és p1 címe a szerver akkor ...
 				 if (((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)){
 					 GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 					 if (cells [clickedX][clickedY].getMarker()==Marker.ATTACKABLE){
@@ -582,7 +583,7 @@ public class GameOn {
 		if (recruiting == true){
 			recruitType = RecruitType.INFANTRY;	
 			alreadychoose=true;
-			gui.appendToChat("Choosen recruit type: pikeman");
+			gui.appendToChat("Choosen recruit type: pikeman\n");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
@@ -593,7 +594,7 @@ public class GameOn {
 		if (recruiting == true){
 			recruitType = RecruitType.CAVALRY;	
 			alreadychoose=true;
-			gui.appendToChat("Choosen recruit type: cavalry");
+			gui.appendToChat("Choosen recruit type: cavalry\n");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
@@ -604,7 +605,7 @@ public class GameOn {
 		if (recruiting == true){
 			recruitType = RecruitType.ARCHER;	
 			alreadychoose=true;
-			gui.appendToChat("Choosen recruit type: archer");
+			gui.appendToChat("Choosen recruit type: archer\n");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
