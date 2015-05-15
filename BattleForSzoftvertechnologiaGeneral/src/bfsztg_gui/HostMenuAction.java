@@ -11,6 +11,15 @@ import javax.swing.JOptionPane;
 import communication.CommTest;
 import communication.Communication;
 
+/**
+ * Action listener for the host menu option.
+ * Shows an input dialog, then prompts for a port string,
+ * then valides the string. If it's not a valid port number it shows
+ * and alert pop-up window.  If it's correct, then creates the
+ * server and subscribes to the message stream.
+ * @author fhenrir
+ *
+ */
 public class HostMenuAction extends AbstractAction {
 
 	/**

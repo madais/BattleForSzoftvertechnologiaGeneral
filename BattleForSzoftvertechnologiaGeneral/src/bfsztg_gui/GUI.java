@@ -27,6 +27,13 @@ import javax.swing.ScrollPaneConstants;
 
 import communication.MsgListener;
 
+/**
+ * Class of the Battle for Szoftvertechnologia General GUI
+ * Contains the GameCanvasPanel in the middle, a chat panel on the bottom
+ * and a button bar on the right side.
+ * @author fhenrir
+ *
+ */
 public class GUI implements MsgListener {
 
 	private JFrame frmBattleForSzoftvertechnolgia;
@@ -270,12 +277,18 @@ public class GUI implements MsgListener {
 		endWaitDefendPanel.add(btnEndTurn, gbc_btnEndTurn);		
 	}
 
+	/**
+	 * Clears the chat output field.
+	 */
 	public void clearChat() {
 		if (getTxtrChattextarea() != null) {
 			getTxtrChattextarea().setText("");
 		}
 	}
 
+	/**
+	 * Moves the text from the chat input field to the end of the chat output.
+	 */
 	public void sendChatText() {
 		if (getTxtrChattextarea() != null) {
 			if (getChatTextField() != null) {
@@ -286,6 +299,11 @@ public class GUI implements MsgListener {
 		}
 	}
 
+	/**
+	 * Appends a string to the end of the chat.
+	 * @param string The string that gets appended to the end of the chat
+	 * window.
+	 */
 	public void appendToChat(String string) {
 		if (getTxtrChattextarea() != null) {
 			getTxtrChattextarea().append(string);
@@ -302,12 +320,20 @@ public class GUI implements MsgListener {
 		this.gameCanvasPanel = gameCanvasPanel;
 	}
 	
+	/**
+	 * Enables the Infantry, Archer and Cavalry buttons on the right panel when
+	 * it's time for recruting.
+	 */
 	public void enableUnitRecruiting(){
 		btnInfantry.setEnabled(true);
 		btnArcher.setEnabled(true);
 		btnCavalry.setEnabled(true);
 	}
 	
+	/**
+	 * Disables the Infantry, Archer and Cavalry buttons on the right panel when
+	 * when recruiting is finished.
+	 */
 	public void disableUnitRecruiting(){
 		btnInfantry.setEnabled(false);
 		btnArcher.setEnabled(false);
@@ -346,6 +372,12 @@ public class GUI implements MsgListener {
 		this.btnEndTurn = btnEndTurn;
 	}
 	
+	
+	/**
+	 * When there is a new message coming from the server,
+	 * we append it in the end of the chat.
+	 * The scroll bar scrolls automatically to the end.
+	 */
 	@Override
 	public void recieveMsg(String msg) {
 		// TODO Auto-generated method stub

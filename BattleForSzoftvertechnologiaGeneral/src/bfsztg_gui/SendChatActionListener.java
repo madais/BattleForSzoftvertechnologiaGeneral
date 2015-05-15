@@ -4,7 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import communication.Communication;
-
+/**
+ * Called when the Send button is clicked on the bottom of the chat panel.
+ * Calls the send message method of the communication class.
+ * @author fhenrir
+ *
+ */
 public class SendChatActionListener implements ActionListener {
 
 	GUI parent;

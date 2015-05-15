@@ -5,6 +5,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
+/**
+ * Used for the close menu option.
+ * Closes the program.
+ * @author fhenrir
+ *
+ */
 public class ExitMenuAction extends AbstractAction{
 
 	

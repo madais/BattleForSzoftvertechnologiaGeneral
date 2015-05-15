@@ -5,9 +5,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * The class which initalizes and holds the graphic images
+ * for the game.
+ * @author fhenrir
+ *
+ */
 public class GameImages {
-
+	
 	Image desert;
 	Image fields;
 	Image forest;
@@ -54,14 +59,12 @@ public class GameImages {
 		this.attackable 	= loadImage("attackable.png");
 	}
 	
-	public Image getRedArcher() {
-		return redArcher;
-	}
 
-	public void setRedArcher(Image redArcher) {
-		this.redArcher = redArcher;
-	}
-
+	/**
+	 * Loads an image as a stream resource from the given relative path.
+	 * @param path The relative path of the image.
+	 * @return
+	 */
 	Image loadImage(String path){
 		Image img = null;
 		try {
@@ -72,6 +75,10 @@ public class GameImages {
 		return img;
 	}
 
+	/**
+	 * Returns image of the desert terrain type.
+	 * @return
+	 */
 	public Image getDesert() {
 		return desert;
 	}
@@ -79,7 +86,11 @@ public class GameImages {
 	public void setDesert(Image desert) {
 		this.desert = desert;
 	}
-
+	
+	/**
+	 * Returns image of the fields terrain type.
+	 * @return
+	 */
 	public Image getFields() {
 		return fields;
 	}
@@ -88,6 +99,10 @@ public class GameImages {
 		this.fields = fields;
 	}
 
+	/**
+	 * Returns image of the forest terrain type.
+	 * @return
+	 */
 	public Image getForest() {
 		return forest;
 	}
@@ -95,7 +110,11 @@ public class GameImages {
 	public void setForest(Image forest) {
 		this.forest = forest;
 	}
-
+	
+	/**
+	 * Returns image of the hills terrain type.
+	 * @return
+	 */
 	public Image getHills() {
 		return hills;
 	}
@@ -104,6 +123,10 @@ public class GameImages {
 		this.hills = hills;
 	}
 
+	/**
+	 * Returns image of the mountains terrain type.
+	 * @return
+	 */
 	public Image getMountains() {
 		return mountains;
 	}
@@ -112,6 +135,10 @@ public class GameImages {
 		this.mountains = mountains;
 	}
 
+	/**
+	 * Returns image of the sea terrain type.
+	 * @return
+	 */
 	public Image getSea() {
 		return sea;
 	}
@@ -120,6 +147,10 @@ public class GameImages {
 		this.sea = sea;
 	}
 
+	/**
+	 * Returns image of the snowy terrain type.
+	 * @return
+	 */
 	public Image getSnow() {
 		return snow;
 	}
@@ -128,6 +159,10 @@ public class GameImages {
 		this.snow = snow;
 	}
 
+	/**
+	 * Returns image of the swamps terrain type.
+	 * @return
+	 */
 	public Image getSwamp() {
 		return swamp;
 	}
@@ -136,6 +171,10 @@ public class GameImages {
 		this.swamp = swamp;
 	}
 
+	/**
+	 * Returns image of the selected unit marker.
+	 * @return
+	 */
 	public Image getSelected() {
 		return selected;
 	}
@@ -144,6 +183,10 @@ public class GameImages {
 		this.selected = selected;
 	}
 
+	/**
+	 * Returns image of the blue archer unit.
+	 * @return
+	 */
 	public Image getBlueArcher() {
 		return blueArcher;
 	}
@@ -152,6 +195,10 @@ public class GameImages {
 		this.blueArcher = blueArcher;
 	}
 
+	/**
+	 * Returns image of the red infantry unit.
+	 * @return
+	 */
 	public Image getRedInfantry() {
 		return redInfantry;
 	}
@@ -160,6 +207,10 @@ public class GameImages {
 		this.redInfantry = redInfantry;
 	}
 
+	/**
+	 * Returns image of the blue infantry unit.
+	 * @return
+	 */
 	public Image getBlueInfantry() {
 		return blueInfantry;
 	}
@@ -168,6 +219,10 @@ public class GameImages {
 		this.blueInfantry = blueInfantry;
 	}
 
+	/**
+	 * Returns image of the red cavalry unit.
+	 * @return
+	 */
 	public Image getRedCavalry() {
 		return redCavalry;
 	}
@@ -176,6 +231,10 @@ public class GameImages {
 		this.redCavalry = redCavalry;
 	}
 
+	/**
+	 * Returns image of the blue cavalry unit.
+	 * @return
+	 */
 	public Image getBlueCavalry() {
 		return blueCavalry;
 	}
@@ -184,6 +243,10 @@ public class GameImages {
 		this.blueCavalry = blueCavalry;
 	}
 
+	/**
+	 * Returns image of marker, which represents an area the unit can move into.
+	 * @return
+	 */
 	public Image getMoveable() {
 		return moveable;
 	}
@@ -192,6 +255,11 @@ public class GameImages {
 		this.moveable = moveable;
 	}
 
+	/**
+	 * Returns image of marker, which represents an area with a unit,
+	 * which the selected unit can attack.
+	 * @return
+	 */
 	public Image getAttackable() {
 		return attackable;
 	}
@@ -200,6 +268,12 @@ public class GameImages {
 		this.attackable = attackable;
 	}
 
+	/**
+	 * Returns image of the castle terrain type.
+	 * In the end of every round it increases the
+	 * owner's victory points counter.
+	 * @return
+	 */
 	public Image getCastle() {
 		return castle;
 	}
@@ -208,7 +282,17 @@ public class GameImages {
 		this.castle = castle;
 	}
 	
-	
+	/**
+	 * Returns image of the red archer unit.
+	 * @return
+	 */
+	public Image getRedArcher() {
+		return redArcher;
+	}
+
+	public void setRedArcher(Image redArcher) {
+		this.redArcher = redArcher;
+	}
 
 		
 }

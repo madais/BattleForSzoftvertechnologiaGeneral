@@ -4,7 +4,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-
+/**
+ * When the player selects the about option from the menu bar, it 
+ * shows a short information about the authors.
+ * @author fhenrir
+ *
+ */
 public class AboutMenuAction extends AbstractAction {
 
 	/**

@@ -4,7 +4,12 @@ import game.game.GameOn;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Called when the player activates the Archer button.
+ * Sets the recruited unit type to Archer.
+ * @author fhenrir
+ *
+ */
 public class ArcherActionListener implements ActionListener {
 
 	private GameOn gameOn;

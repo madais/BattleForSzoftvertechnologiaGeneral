@@ -15,7 +15,11 @@ import bfsztg_gui.GraphicCell.Marker;
 import bfsztg_gui.GraphicCell.Terrain;
 import bfsztg_gui.GraphicCell.Unit;
 import bfsztg_settings.*;
-
+/**
+ * The class of the map in the center of the GUI window.
+ * @author fhenrir
+ *
+ */
 public class GameCanvasPanel extends JPanel{
 	
 	GUI parent;
@@ -26,15 +30,26 @@ public class GameCanvasPanel extends JPanel{
 	int[][] cellCentersY;
 	GraphicCell[][] cells;
 	
+	/**
+	 * An enum containing the recruitable types of units.
+	 * It's NONE if no unit type has been selected yet.
+	 * @author fhenrir
+	 *
+	 */
 	public enum Recruit {
 	    NONE, SPEARMAN, ARCHER, CAVALRY	    
 	}
 	
+	/**
+	 * Callback method. It paints the terrain tiles, the units,
+	 * and then the marker images on top of eachother.
+	 */
 	protected void paintComponent(Graphics g) {	
 		super.paintComponent(g);
 		PaintTerrain(g,cells);
 		PaintUnits(g,cells);
 		PaintMarkers(g,cells);
+		//Uncomment the following lines to show the cell centers
 //		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
 //			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
 //				g.drawOval(cellCentersX[i][j], cellCentersY[i][j], 2, 2);
@@ -42,6 +57,12 @@ public class GameCanvasPanel extends JPanel{
 //		}
 	}
 	
+	/**
+	 * Draws the unit images depending on the two dimensional
+	 * GraphicCell array it gets as the second parameter.
+	 * @param g
+	 * @param cells2
+	 */
 	private void PaintUnits(Graphics g, GraphicCell[][] cells2) {
 		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
 			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
@@ -72,6 +93,12 @@ public class GameCanvasPanel extends JPanel{
 		}		
 	}
 
+	/**
+	 * Draws the marker images depending on the two dimensional
+	 * GraphicCell array it gets as the second parameter.
+	 * @param g
+	 * @param cells2
+	 */
 	private void PaintMarkers(Graphics g, GraphicCell[][] cells2) {
 		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
 			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
@@ -94,7 +121,12 @@ public class GameCanvasPanel extends JPanel{
 	}
 	
 	
-
+	/**
+	 * Draws the terrain tile images depending on the two dimensional
+	 * GraphicCell array it gets as the second parameter.
+	 * @param g
+	 * @param cells2
+	 */
 	private void PaintTerrain(Graphics g, GraphicCell[][] cells2) {
 		for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
 			for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
@@ -131,6 +163,12 @@ public class GameCanvasPanel extends JPanel{
 		}		
 	}
 
+	/**
+	 * Constructor of the GameCanvasPanel:
+	 * Initializes the GameImages class, which contains the game images.
+	 * Calculates the cell corners and centers, and creates a new GraphicCell matrix.
+	 * @param parent
+	 */
 	public GameCanvasPanel(GUI parent){
 		   	this.parent = parent;
 			images = new GameImages();
@@ -162,7 +200,11 @@ public class GameCanvasPanel extends JPanel{
 			
 	}
 
-
+	/**
+	 * Can be used to create a GraphicCell matrix for debug and graphical demonstration.
+	 * @param i
+	 * @param j
+	 */
 	private void TestCellInit(int i, int j) {
 		if(i == 3 && j ==6){
 			cells[i][j]=new GraphicCell(Terrain.MOUNTAINS, Unit.NONE, Marker.NONE);
@@ -245,12 +287,19 @@ public class GameCanvasPanel extends JPanel{
 		return cells;
 	}
 
+	/**
+	 * Setter of the GraphicCell array. Automatically redraws the
+	 * hex map, using the new GraphicCell matrix.
+	 * @param cells
+	 */
 	public void setCells(GraphicCell[][] cells) {
 		this.cells = cells;
 		GameCanvasPanel.this.repaint();
-		System.out.println("After redraw.");
 	}
 
+	/**
+	 * Clears the markers from the map.
+	 */
 	public void ClearMarkers(){
 		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
 			 for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){
@@ -260,6 +309,11 @@ public class GameCanvasPanel extends JPanel{
 		GameCanvasPanel.this.repaint();
 	}
 	
+	/**
+	 * Puts moveable markers on the left or right column of
+	 * hexagons. Use it for the recruit phase.
+	 * @param leftside
+	 */
 	public void RecruitMarkers(boolean leftside){
 		int columnToMark;
 		if (leftside){
@@ -274,6 +328,12 @@ public class GameCanvasPanel extends JPanel{
 		GameCanvasPanel.this.repaint();
 	}
 	
+	/**
+	 * Puts a single marker (first parameter) on the hexagon indexed by posX and posY.
+	 * @param marker
+	 * @param posX
+	 * @param posY
+	 */
 	public void setSingleMarker(Marker marker, int posX, int posY){		
 		cells[posX][posY].setMarker(marker);		
 		GameCanvasPanel.this.repaint();

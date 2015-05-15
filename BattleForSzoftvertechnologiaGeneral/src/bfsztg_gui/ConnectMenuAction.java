@@ -12,6 +12,15 @@ import javax.swing.JOptionPane;
 
 import communication.Communication;
 
+/**
+ * Action listener for the connect menu option.
+ * Shows an input dialog, then prompts for an IP number and a port string,
+ * then valides the string. If it's not a valid IP&port number it shows
+ * and alert pop-up window.  If it's correct, then connects to the
+ * server and subscribes to the message stream.
+ * @author fhenrir
+ *
+ */
 public class ConnectMenuAction extends AbstractAction {
 
 
