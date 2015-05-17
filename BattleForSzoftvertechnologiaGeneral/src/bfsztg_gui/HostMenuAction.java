@@ -1,5 +1,7 @@
 package bfsztg_gui;
 
+import game.game.GameOn;
+
 import java.awt.event.ActionEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,7 +12,7 @@ import javax.swing.JOptionPane;
 
 import communication.CommTest;
 import communication.Communication;
-
+import game.game.BattleForSzoftvertechnologiaGeneral_v2;
 public class HostMenuAction extends AbstractAction {
 
 	/**
@@ -46,6 +48,7 @@ public class HostMenuAction extends AbstractAction {
 	    	try{
 	    	  Communication.start_server(inputValue);
 	    	  Communication.subscribe_message(this.parent);
+	    	  //Communication.subscribe_table(BattleForSzoftvertechnologiaGeneral_v2.getgame());
 	    	  //Communication.send_message("Ez a cim: " + Communication.getlocalport());;
 	    	  parent.getBtnSend().addActionListener(new SendChatActionListener(parent)); 
 	    	}

@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 import communication.Communication;
+import game.game.BattleForSzoftvertechnologiaGeneral_v2;
 
 public class ConnectMenuAction extends AbstractAction {
 
@@ -43,6 +44,7 @@ GUI parent;
 	    	  Communication.connect_server(cim[0], Integer.parseInt(cim[1]));
 	    	  parent.getBtnSend().addActionListener(new SendChatActionListener(parent));
 	    	  Communication.subscribe_message(parent);
+	    	  Communication.subscribe_table(BattleForSzoftvertechnologiaGeneral_v2.getgame());
 	      }
 	
 	}

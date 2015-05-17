@@ -2,6 +2,7 @@ package communication;
 
 import game.game.GameOn;
 
+
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,8 +24,11 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.ArrayList;
+//import java.util.List;
 
 import communication.MsgListener;
+import game.map.*;
+//import java.util.List;
 
 public class Client extends Communication implements Runnable{
 	
@@ -46,8 +50,11 @@ public class Client extends Communication implements Runnable{
 	ArrayList<String> msg_out_list=new ArrayList<String>();
 	ArrayList<String> msg_in_list=new ArrayList<String>();
 	
-	ArrayList<GameOn> table_out_list=new ArrayList<GameOn>();
-	ArrayList<GameOn> table_in_list=new ArrayList<GameOn>();
+	//ArrayList<GameOn> table_out_list=new ArrayList<GameOn>();
+	//ArrayList<GameOn> table_in_list=new ArrayList<GameOn>();
+	
+	ArrayList<Map> table_out_list=new ArrayList<Map>();
+	ArrayList<Map> table_in_list=new ArrayList<Map>();
 	
 	
 	@Override
@@ -159,8 +166,9 @@ public class Client extends Communication implements Runnable{
 				msg_in_list.add((String)o);
 			}
 			
-			if (o instanceof GameOn){
-				table_in_list.add((GameOn)o);
+			if (o instanceof Map){
+				//table_in_list.add((GameOn)o);
+				table_in_list.add((Map)o);
 			}
 			
 			file_in_cnt++;
@@ -185,6 +193,7 @@ public class Client extends Communication implements Runnable{
 		while	(file_olvas.available()>0){ 
 			write_socket.write(file_olvas.read());
 		}
+		write_socket.write(0);	//lezáró 0;
 		write_socket.flush();
 		
 		file_olvas.close();
@@ -207,13 +216,14 @@ public class Client extends Communication implements Runnable{
 		return ;
 	}
 
-	public boolean send_table_client(GameOn table){
+	public boolean send_table_client(Map table){
 		table_out_list.add(table);
 		return true;
 	}
 	
 	public void recieve_table(){
-		GameOn table=table_in_list.remove(0);
+		//GameOn table=table_in_list.remove(0);
+		Map table=table_in_list.remove(0);
 		for (TableListener subscriber :table_list){
 			subscriber.recieveTable(table);
 		}

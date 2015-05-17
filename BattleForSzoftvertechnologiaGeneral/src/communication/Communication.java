@@ -6,6 +6,7 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.IOException;
 import java.util.ArrayList;
+import game.map.*;
 
 public abstract class Communication {
 	
@@ -76,7 +77,7 @@ public abstract class Communication {
 		client.send_msg(str + "\n");
 	}
 	
-	public static void send_table(GameOn table){
+	public static void send_table(Map table){
 		client.send_table_client(table);
 	}
 	
@@ -85,10 +86,18 @@ public abstract class Communication {
 		client.subscribe_msg(listener);
 	}
 	
+	/**
+	 * 
+	 * @param listener - the input parameter
+	 */
 	public static void subscribe_table(TableListener listener){
 		client.subscribe_table(listener);
 	}
 
+	/**
+	 * 
+	 * @return - returns the client_list
+	 */
 	public static ArrayList<String> get_clients(){
 		ArrayList<String> client_list=null;
 		

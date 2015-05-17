@@ -1,3 +1,5 @@
+package game.game;
+
 import game.game.GameOn;
 
 import java.io.IOException;
@@ -14,10 +16,10 @@ import bfsztg_gui.InfantryActionListener;
 import communication.*;
 
 
-public abstract class BattleForSzoftvertechnologiaGeneral {
+public abstract class BattleForSzoftvertechnologiaGeneral_v2 {
 	static GameOn game = null;
 	
-	public GameOn getgame(){
+	public static GameOn getgame(){
 		return game;
 	}
 	

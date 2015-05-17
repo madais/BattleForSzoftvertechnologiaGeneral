@@ -6,6 +6,8 @@ import java.util.Random;
 import javax.crypto.AEADBadTagException;
 import javax.swing.JOptionPane;
 
+import communication.Communication;
+import communication.TableListener;
 import bfsztg_gui.ArcherActionListener;
 import bfsztg_gui.CavalryActionListener;
 import bfsztg_gui.EndTurnActionListener;
@@ -22,7 +24,7 @@ import game.unit.Pikeman;
 import game.unit.Team;
 import game.unit.Unit;
 
-public class GameOn {
+public class GameOn implements TableListener {
 	
 	GUI gui;
 	Map M;
@@ -71,36 +73,36 @@ public class GameOn {
 	}
 
 	void attack(Map M, Unit A, Unit B) {
-		// ha a kõ-papír-olló játék teljesül
-		// lovas üti az íjász
-		// íjász üti a gyalogost
-		// gyalogos üti a lovast
+		// ha a kï¿½-papï¿½r-ollï¿½ jï¿½tï¿½k teljesï¿½l
+		// lovas ï¿½ti az ï¿½jï¿½sz
+		// ï¿½jï¿½sz ï¿½ti a gyalogost
+		// gyalogos ï¿½ti a lovast
 		if ((A.unitid == 1 && B.unitid == 2)
 				|| (A.unitid == 2 && B.unitid == 3)
 				|| (A.unitid == 3 && B.unitid == 1)) {
-			// getClass vagy gettype megkeresése, olvashatóság miatt
-			// equals-al kellene stringet hasonlítani
+			// getClass vagy gettype megkeresï¿½se, olvashatï¿½sï¿½g miatt
+			// equals-al kellene stringet hasonlï¿½tani
 			int dmg = dmgcalc();
 			B.decreasehp(dmg);
-			System.out.println("Támadó egység sebzése:" + dmg);
+			System.out.println("Tï¿½madï¿½ egysï¿½g sebzï¿½se:" + dmg);
 			gui.appendToChat("Defender take:" + dmg + "damage\n");
 			if (B.gethp() != 0) {
 				dmg = dmgcalc();
 				A.decreasehp(dmg);
-				System.out.println("Védekezõ egység sebzése:" + dmg);
+				System.out.println("Vï¿½dekezï¿½ egysï¿½g sebzï¿½se:" + dmg);
 				gui.appendToChat("Attacker take:" + dmg + "damage\n");
 			}
 			return;
 		}else{
-			// ha egyik sem élvez elõnyt a másikkal szemben
+			// ha egyik sem ï¿½lvez elï¿½nyt a mï¿½sikkal szemben
 			int dmg1 = dmgcalc();
 			int dmg2 = dmgcalc();
 			A.decreasehp(dmg1);
 			B.decreasehp(dmg2);
-			System.out.println("bunyó volt :)");
-			System.out.println("Támadó egység sebzése:" + dmg1);
+			System.out.println("bunyï¿½ volt :)");
+			System.out.println("Tï¿½madï¿½ egysï¿½g sebzï¿½se:" + dmg1);
 			gui.appendToChat("Attacker make:" + dmg2 + "damage\n");
-			System.out.println("védekezõ egység sebzése:" + dmg2);
+			System.out.println("vï¿½dekezï¿½ egysï¿½g sebzï¿½se:" + dmg2);
 			gui.appendToChat("Defender make:" + dmg1 + "damage\n");
 		}
 		A.moved();
@@ -245,7 +247,7 @@ public class GameOn {
 								gui.getGameCanvasPanel().RecruitMarkers(true);
 							}
 							gui.enableUnitRecruiting();					
-							//A tábla színezése:
+							//A tï¿½bla szï¿½nezï¿½se:
 						}else {
 							recruiting = false;
 							gui.disableUnitRecruiting();
@@ -291,10 +293,10 @@ public class GameOn {
 			if (round%5==1){
 				notrecruited=true;
 			}
-			System.out.println("pontok kiosztása");
+			System.out.println("pontok kiosztï¿½sa");
 			M.clearneighbour();
 			freshthemap();
-			System.out.println("térkép frissítése");
+			System.out.println("tï¿½rkï¿½p frissï¿½tï¿½se");
 			if (start==1){
 				p1turn=true;
 				p2turn=false;
@@ -311,13 +313,13 @@ public class GameOn {
 	}
 
 	private void initGame() {
-		//inicializálás
+		//inicializï¿½lï¿½s
 		victpoint=50;
 		M=new Map();
 		T1=new Team(1);
 		T2=new Team(2);
 		initTeams();
-		//setunittomap(M,T1,T2);//inicializálás vége
+		//setunittomap(M,T1,T2);//inicializï¿½lï¿½s vï¿½ge
 		gui.getGameCanvasPanel().addMouseListener(new GameCanvasMouseListener(gui.getGameCanvasPanel(), gui, this));
 		gui.getBtnArcher().addActionListener(new ArcherActionListener(this));
 		gui.getBtnInfantry().addActionListener(new InfantryActionListener(this));
@@ -352,9 +354,9 @@ public class GameOn {
 		T1.newstack(M, 1, 1, 10, 5);
 		T2.newstack(M, 2, 2, 13, 6);
 		
-//		System.out.println("0 7 szomszésai"+M.map[23][7].getNeighnum());
-//		System.out.println("0 8 szomszésai"+M.map[23][8].getNeighnum());
-//		System.out.println("0 9 szomszésai"+M.map[23][9].getNeighnum());
+//		System.out.println("0 7 szomszï¿½sai"+M.map[23][7].getNeighnum());
+//		System.out.println("0 8 szomszï¿½sai"+M.map[23][8].getNeighnum());
+//		System.out.println("0 9 szomszï¿½sai"+M.map[23][9].getNeighnum());
 		freshthemap();
 		//freshthemap();
 //		for (int i=0;i<24;i++){
@@ -362,9 +364,9 @@ public class GameOn {
 //				M.findneighbour(i+1, j+1);
 //			}
 //		}
-//		System.out.println("0 7 szomszésai" +M.map[23][7].getNeighnum());
-//		System.out.println("0 8 szomszésai" +M.map[23][8].getNeighnum());
-//		System.out.println("0 9 szomszésai" +M.map[23][9].getNeighnum());
+//		System.out.println("0 7 szomszï¿½sai" +M.map[23][7].getNeighnum());
+//		System.out.println("0 8 szomszï¿½sai" +M.map[23][8].getNeighnum());
+//		System.out.println("0 9 szomszï¿½sai" +M.map[23][9].getNeighnum());
 		
 		
 //		M.map[0][7].setGameunit(new Cavalary(1, 7, 0)); 
@@ -460,7 +462,7 @@ public class GameOn {
 				 if ((M.getArea(clickedX, clickedY).getGameunit().isMoved()==false) && ((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)){
 					GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 					cells [clickedX][clickedY].setMarker(Marker.SELECTED);
-					System.out.println("szomszédok száma: " + M.map[clickedX][clickedY].getNeighnum());
+					System.out.println("szomszï¿½dok szï¿½ma: " + M.map[clickedX][clickedY].getNeighnum());
 					for (int i=0;i<M.map[clickedX][clickedY].getNeighnum();i++){
 						if (M.map[M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].getGameunit()==null){//marker==move
 							cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
@@ -615,10 +617,12 @@ public class GameOn {
 		p1turn=!p1turn;
 		if (p1turn==false){
 			endturn1=true;
+			Communication.send_table(M);
 		}
 		p2turn=!p2turn;
 		if (p2turn==false){
 			endturn2=true;
+			Communication.send_table(M);
 		}
 	}
 	
@@ -630,6 +634,13 @@ public class GameOn {
 //				}
 			}
 		}
+	}
+
+	@Override
+	public void recieveTable(Map table) {
+		// TODO Auto-generated method stub
+		//M=table;
+		 gui.getGameCanvasPanel().setCells(M.toGraphicCellArray());
 	}
 	
 	

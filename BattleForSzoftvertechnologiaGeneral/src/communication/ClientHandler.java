@@ -8,6 +8,11 @@ import java.nio.charset.StandardCharsets;
 import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 
+/**
+ * This class is very cool.
+ * @author mdi
+ *
+ */
 public class ClientHandler extends Communication implements Runnable{
 
 	private static int number=0;
