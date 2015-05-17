@@ -18,6 +18,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -26,6 +27,13 @@ import javax.swing.ScrollPaneConstants;
 
 import communication.MsgListener;
 
+/**
+ * Class of the Battle for Szoftvertechnologia General GUI
+ * Contains the GameCanvasPanel in the middle, a chat panel on the bottom
+ * and a button bar on the right side.
+ * @author fhenrir
+ *
+ */
 public class GUI implements MsgListener {
 
 	private JFrame frmBattleForSzoftvertechnolgia;
@@ -37,6 +45,7 @@ public class GUI implements MsgListener {
 	JButton btnCavalry;
 	JButton btnEndTurn;
 	JButton btnSend;
+	JScrollPane txtrChattextareaScroll;
 	
 	/**
 	 * Launch the application.
@@ -144,7 +153,7 @@ public class GUI implements MsgListener {
 		txtrChattextarea.setEditable(false);
 		txtrChattextarea.setRows(5);
 		txtrChattextarea.setText("initializing...\n");
-		JScrollPane txtrChattextareaScroll = new JScrollPane(txtrChattextarea);
+		txtrChattextareaScroll = new JScrollPane(txtrChattextarea);
 		txtrChattextareaScroll
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		chatPanel.add(txtrChattextareaScroll, BorderLayout.NORTH);
@@ -268,12 +277,18 @@ public class GUI implements MsgListener {
 		endWaitDefendPanel.add(btnEndTurn, gbc_btnEndTurn);		
 	}
 
+	/**
+	 * Clears the chat output field.
+	 */
 	public void clearChat() {
 		if (getTxtrChattextarea() != null) {
 			getTxtrChattextarea().setText("");
 		}
 	}
 
+	/**
+	 * Moves the text from the chat input field to the end of the chat output.
+	 */
 	public void sendChatText() {
 		if (getTxtrChattextarea() != null) {
 			if (getChatTextField() != null) {
@@ -284,10 +299,17 @@ public class GUI implements MsgListener {
 		}
 	}
 
+	/**
+	 * Appends a string to the end of the chat.
+	 * @param string The string that gets appended to the end of the chat
+	 * window.
+	 */
 	public void appendToChat(String string) {
 		if (getTxtrChattextarea() != null) {
 			getTxtrChattextarea().append(string);
-		}
+			JScrollBar scrollbar = getTxtrChattextareaScroll().getVerticalScrollBar();
+			scrollbar.setValue(scrollbar.getMaximum());
+		}		
 	}
 
 	public GameCanvasPanel getGameCanvasPanel() {
@@ -298,12 +320,20 @@ public class GUI implements MsgListener {
 		this.gameCanvasPanel = gameCanvasPanel;
 	}
 	
+	/**
+	 * Enables the Infantry, Archer and Cavalry buttons on the right panel when
+	 * it's time for recruting.
+	 */
 	public void enableUnitRecruiting(){
 		btnInfantry.setEnabled(true);
 		btnArcher.setEnabled(true);
 		btnCavalry.setEnabled(true);
 	}
 	
+	/**
+	 * Disables the Infantry, Archer and Cavalry buttons on the right panel when
+	 * when recruiting is finished.
+	 */
 	public void disableUnitRecruiting(){
 		btnInfantry.setEnabled(false);
 		btnArcher.setEnabled(false);
@@ -342,6 +372,12 @@ public class GUI implements MsgListener {
 		this.btnEndTurn = btnEndTurn;
 	}
 	
+	
+	/**
+	 * When there is a new message coming from the server,
+	 * we append it in the end of the chat.
+	 * The scroll bar scrolls automatically to the end.
+	 */
 	@Override
 	public void recieveMsg(String msg) {
 		// TODO Auto-generated method stub
@@ -355,6 +391,14 @@ public class GUI implements MsgListener {
 
 	public void setBtnSend(JButton btnSend) {
 		this.btnSend = btnSend;
+	}
+
+	public JScrollPane getTxtrChattextareaScroll() {
+		return txtrChattextareaScroll;
+	}
+
+	public void setTxtrChattextareaScroll(JScrollPane txtrChattextareaScroll) {
+		this.txtrChattextareaScroll = txtrChattextareaScroll;
 	}
 	
 	

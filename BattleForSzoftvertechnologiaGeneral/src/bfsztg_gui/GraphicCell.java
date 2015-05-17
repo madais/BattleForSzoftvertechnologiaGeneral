@@ -2,22 +2,43 @@ package bfsztg_gui;
 
 import game.map.Map;
 
+/**
+ * A class with enums for the terrain, unit and marker types.
+ * It is used during the drawing of the hexagonal map.
+ * @author fhenrir
+ *
+ */
 public class GraphicCell {
 
 	Terrain terrain;
 	Unit unit;
 	Marker marker;
 	
+	/**
+	 * Currently available terrain tile types.
+	 * @author fhenrir
+	 *
+	 */
 	public enum Terrain {
 	    DESERT, FIELDS, FOREST, HILLS,
 	    MOUNTAINS, SEA, SNOW, SWAMP, CASTLE
 	}
 	
+	/**
+	 * Available unit types.
+	 * @author fhenrir
+	 *
+	 */
 	public enum Unit {
 	    NONE, BLUE_INFANTRY, BLUE_ARCHER, BLUE_CAVALRY, 
 	    RED_INFANTRY, RED_ARCHER, RED_CAVALRY	    
 	}
 	
+	/**
+	 * Available marker types.
+	 * @author fhenrir
+	 *
+	 */
 	public enum Marker {
 	    NONE, SELECTED, MOVEABLE, ATTACKABLE	    
 	}

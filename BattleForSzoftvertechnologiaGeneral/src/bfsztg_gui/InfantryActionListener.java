@@ -6,7 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-
+/**
+ * Called when the player activates the Infantry button.
+ * Sets the recruited unit type to Infantry.
+ * @author fhenrir
+ *
+ */
 public class InfantryActionListener implements ActionListener {
 
 	private GameOn gameOn;

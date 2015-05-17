@@ -72,12 +72,19 @@ public class GameOn implements TableListener {
 		System.out.println("elmozdult :)");
 	}
 
-	void attack(Map M, Unit A, Unit B) {
+	void attack(Map M, Unit A, Unit B, boolean longshoot) {
 		// ha a k�-pap�r-oll� j�t�k teljes�l
 		// lovas �ti az �j�sz
 		// �j�sz �ti a gyalogost
 		// gyalogos �ti a lovast
-		if ((A.unitid == 1 && B.unitid == 2)
+		if (A.unitid==2 && longshoot==true){
+			int dmg=dmgcalc();
+			B.decreasehp(dmg);
+			System.out.println("T�mad� egys�g sebz�se:" + dmg);
+			gui.appendToChat("Archer make:" + dmg + "damage\n");
+//			A.moved();
+//			return;
+		}else if ((A.unitid == 1 && B.unitid == 2)
 				|| (A.unitid == 2 && B.unitid == 3)
 				|| (A.unitid == 3 && B.unitid == 1)) {
 			// getClass vagy gettype megkeres�se, olvashat�s�g miatt
@@ -92,7 +99,8 @@ public class GameOn implements TableListener {
 				System.out.println("V�dekez� egys�g sebz�se:" + dmg);
 				gui.appendToChat("Attacker take:" + dmg + "damage\n");
 			}
-			return;
+//			A.moved();
+//			return;
 		}else{
 			// ha egyik sem �lvez el�nyt a m�sikkal szemben
 			int dmg1 = dmgcalc();
@@ -459,8 +467,9 @@ public class GameOn implements TableListener {
 //			}
 	//		System.out.println(M.getArea(clickedX, clickedY).getGameunit().getTeam());
 			 if (M.getArea(clickedX, clickedY).getGameunit()!=null){
-				 if ((M.getArea(clickedX, clickedY).getGameunit().isMoved()==false) && ((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)){
-					GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
+				 if ((M.getArea(clickedX, clickedY).getGameunit().isMoved()==false) && (((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2))){
+					System.out.println("kattint�s ut�n: " + M.getArea(clickedX, clickedY).getGameunit().isMoved());
+					 GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 					cells [clickedX][clickedY].setMarker(Marker.SELECTED);
 					System.out.println("szomsz�dok sz�ma: " + M.map[clickedX][clickedY].getNeighnum());
 					for (int i=0;i<M.map[clickedX][clickedY].getNeighnum();i++){
@@ -474,6 +483,15 @@ public class GameOn implements TableListener {
 //							else{
 //								cells [M.map[clickedX][clickedY].getNeighbours()[i][0]][M.map[clickedX][clickedY].getNeighbours()[i][1]].setMarker(Marker.MOVEABLE);
 //							}
+						}
+					}
+					if (M.map[clickedX][clickedY].getGameunit().getUnitid()==2){
+						for (int i=0;i<M.map[clickedX][clickedY].getTargetnum();i++){
+							if (M.map[M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].getGameunit()!=null) {
+								if ((M.map[M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].getGameunit().getteam()==1 && p2turn==true) || (M.map[M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].getGameunit().getteam()==2 && p1turn==true)){
+									cells [M.map[clickedX][clickedY].getTargets(i,0)][M.map[clickedX][clickedY].getTargets(i,1)].setMarker(Marker.ATTACKABLE);
+								}
+							}
 						}
 					}
 					movepoz1=clickedX;
@@ -506,12 +524,23 @@ public class GameOn implements TableListener {
 //				 gui.getGameCanvasPanel().setCells(cells);
 				 //refres gui
 			 }else if (M.getArea(clickedX, clickedY).getGameunit()!=null){
+				 //ha p1turn �s p1 c�me a szerver akkor ...
 				 if (((p1turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==2)) || (p2turn==true && M.getArea(clickedX, clickedY).getGameunit().getTeam()==1)){
 					 GraphicCell[][] cells= gui.getGameCanvasPanel().getCells();
 					 if (cells [clickedX][clickedY].getMarker()==Marker.ATTACKABLE){
-						 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit());
-					 }	
+						 if (M.map[movepoz1][movepoz2].getGameunit().getUnitid()==2){
+							 if (M.map[movepoz1][movepoz2].isneighbour(clickedX,clickedY)){
+								 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit(),false);
+							 }else{
+								 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit(),true);
+							 }
+						 }else{
+							 attack(M,M.map[movepoz1][movepoz2].getGameunit(),M.map[clickedX][clickedY].getGameunit(),false);
+						 }
+					 }
 					 gui.getGameCanvasPanel().ClearMarkers();
+//					 M.map[movepoz1][movepoz2].getGameunit().moved=true;
+//					 System.out.println("t�mad�s ut�n:" + M.getArea(movepoz1, movepoz2).getGameunit().isMoved());
 					 //refresh gui
 					 alreadychoosenonestack=false;
 					 gui.getGameCanvasPanel().setCells(M.toGraphicCellArray()); 
@@ -523,7 +552,6 @@ public class GameOn implements TableListener {
 		}
 		System.out.println("End of click, redrawing cells.");
 	}
-
 	public GUI getGui() {
 		return gui;
 	}
@@ -584,7 +612,7 @@ public class GameOn implements TableListener {
 		if (recruiting == true){
 			recruitType = RecruitType.INFANTRY;	
 			alreadychoose=true;
-			gui.appendToChat("Choosen recruit type: pikeman");
+			gui.appendToChat("Choosen recruit type: pikeman\n");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
@@ -595,7 +623,7 @@ public class GameOn implements TableListener {
 		if (recruiting == true){
 			recruitType = RecruitType.CAVALRY;	
 			alreadychoose=true;
-			gui.appendToChat("Choosen recruit type: cavalry");
+			gui.appendToChat("Choosen recruit type: cavalry\n");
 		}
 		else{
 			recruitType = RecruitType.NONE;	
@@ -606,7 +634,7 @@ public class GameOn implements TableListener {
 		if (recruiting == true){
 			recruitType = RecruitType.ARCHER;	
 			alreadychoose=true;
-			gui.appendToChat("Choosen recruit type: archer");
+			gui.appendToChat("Choosen recruit type: archer\n");
 		}
 		else{
 			recruitType = RecruitType.NONE;	

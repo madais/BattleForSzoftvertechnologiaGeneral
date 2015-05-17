@@ -9,6 +9,7 @@ public class Area {
 	public int neighbours[][];//szomszédok
 	public int neighnum;//hány szomszédja van
 	public int targets[][];
+	public int targetnum;
 	int id;
 	boolean shoot;//átlõhetõ-e
 	boolean moveable;
@@ -117,6 +118,42 @@ public class Area {
 		}
 		neighnum=0;
 	}
+
+	public int[][] getTargets() {
+		return targets;
+	}
+
+	public void setTargets(int[][] targets) {
+		this.targets = targets;
+	}
+
+	public int getTargetnum() {
+		return targetnum;
+	}
+
+	public void setTargetnum(int targetnum) {
+		this.targetnum = targetnum;
+	}
+
+	public void setTargets(int i, int j) {
+		targets[targetnum][0]=i;
+		targets[targetnum][1]=j;
+		this.targetnum++;
+	}
+	
+	public int getTargets(int i, int j){
+		return this.targets[i][j];
+	}
+
+	public boolean isneighbour(int clickedX, int clickedY) {
+		for (int i=0;i<this.neighnum;i++){
+			if (this.neighbours[i][0]==clickedX && this.neighbours[i][1]==clickedY){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 	
 	

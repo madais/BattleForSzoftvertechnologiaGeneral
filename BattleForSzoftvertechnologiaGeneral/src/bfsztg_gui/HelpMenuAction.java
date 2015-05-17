@@ -8,6 +8,12 @@ import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+/**
+ * Shows a help window when the help option is selected
+ * from the menu bar.
+ * @author fhenrir
+ *
+ */
 public class HelpMenuAction extends AbstractAction {
 
 	public HelpMenuAction() {
