@@ -12,9 +12,7 @@ import javax.swing.JOptionPane;
 
 import communication.CommTest;
 import communication.Communication;
-<<<<<<< HEAD
 import game.game.BattleForSzoftvertechnologiaGeneral_v2;
-=======
 
 /**
  * Action listener for the host menu option.
@@ -25,7 +23,6 @@ import game.game.BattleForSzoftvertechnologiaGeneral_v2;
  * @author fhenrir
  *
  */
->>>>>>> branch 'master' of https://github.com/madais/BattleForSzoftvertechnologiaGeneral.git
 public class HostMenuAction extends AbstractAction {
 
 	/**
