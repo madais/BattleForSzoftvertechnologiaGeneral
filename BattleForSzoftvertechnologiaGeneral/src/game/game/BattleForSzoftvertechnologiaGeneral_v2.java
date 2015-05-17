@@ -31,7 +31,8 @@ public abstract class BattleForSzoftvertechnologiaGeneral_v2 {
 			window.getFrmBattleForSzoftvertechnolgia().setVisible(true);
 			window.disableUnitRecruiting();
 			//Game map mouse listener
-			game = new GameOn(window);
+			new GameOn(window);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

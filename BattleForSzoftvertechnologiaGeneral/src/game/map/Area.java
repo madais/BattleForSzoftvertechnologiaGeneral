@@ -5,18 +5,23 @@ import game.unit.Unit;
 public class Area {
 	int poz1;//sor
 	int poz2;//oszlop
-	int team;//ha van rajta egység, akkor melyik csapat-é
-	public int neighbours[][];//szomszédok
-	public int neighnum;//hány szomszédja van
+	int team;//ha van rajta egysï¿½g, akkor melyik csapat-ï¿½
+	public int neighbours[][];//szomszï¿½dok
+	public int neighnum;//hï¿½ny szomszï¿½dja van
 	public int targets[][];
 	public int targetnum;
 	int id;
-	boolean shoot;//átlõhetõ-e
+	boolean shoot;//ï¿½tlï¿½hetï¿½-e
 	boolean moveable;
 	Unit gameunit;
-		
-	void findtarget(){//azok a pontok ahova még ellõhet az íjász
-		//lehet hogy a map-ban kéne megírni
+	
+	
+	public Area(){
+		super();
+	}
+	
+	void findtarget(){//azok a pontok ahova mï¿½g ellï¿½het az ï¿½jï¿½sz
+		//lehet hogy a map-ban kï¿½ne megï¿½rni
 	}
 	
 	void drawarea(){}
@@ -107,7 +112,7 @@ public class Area {
 	}
 	
 	int getneighbours(int i, int j){
-//		System.out.println("lekérdezett szomszéd i:"+ i + " j: " + j);
+//		System.out.println("lekï¿½rdezett szomszï¿½d i:"+ i + " j: " + j);
 		return neighbours[i][j];
 	}
 

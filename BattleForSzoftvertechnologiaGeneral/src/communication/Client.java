@@ -99,13 +99,13 @@ public class Client extends Communication implements Runnable{
 					ex.printStackTrace();
 				}
 			
-
+/*
 			try{
 				Thread.sleep(100);
 			}
 			catch (InterruptedException ex){
 				ex.printStackTrace();
-			}
+			}*/
 		}
 	}
 
@@ -203,7 +203,7 @@ public class Client extends Communication implements Runnable{
 	}
 	
 	public boolean send_msg(String msg){
-		msg_out_list.add(msg);
+		//msg_out_list.add(msg);
 		msg_out_list.add(msg);
 		return true;
 	}
@@ -217,6 +217,7 @@ public class Client extends Communication implements Runnable{
 	}
 
 	public boolean send_table_client(Map table){
+		
 		table_out_list.add(table);
 		return true;
 	}
@@ -234,7 +235,7 @@ public class Client extends Communication implements Runnable{
 		msg_list.add(listener);
 	}
 
-	public void subscribe_tabel(TableListener listener){
+	public void subscribe_tbl(TableListener listener){
 		table_list.add(listener);
 	}
 

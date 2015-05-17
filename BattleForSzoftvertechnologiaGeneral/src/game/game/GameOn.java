@@ -24,8 +24,9 @@ import game.unit.Pikeman;
 import game.unit.Team;
 import game.unit.Unit;
 
-public class GameOn implements TableListener {
+public class GameOn implements TableListener, Runnable {
 	
+	public static GameOn lastgame=null;
 	GUI gui;
 	Map M;
 	int victpoint;
@@ -47,6 +48,14 @@ public class GameOn implements TableListener {
 	boolean notrecruited;
 	boolean alreadychoosenonestack;
 	
+	
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		this.mainGameMethod();
+	}
+
 	public enum RecruitType{
 	    NONE, ARCHER, CAVALRY, INFANTRY 
 	}
@@ -70,6 +79,7 @@ public class GameOn implements TableListener {
 		}
 		A.moved();
 		System.out.println("elmozdult :)");
+		Communication.send_table(M);
 	}
 
 	void attack(Map M, Unit A, Unit B, boolean longshoot) {
@@ -134,6 +144,7 @@ public class GameOn implements TableListener {
 		}
 		M.clearneighbour();
 		freshthemap();
+		Communication.send_table(M);
 	}
 	
 //	public static void setunittomap(Map M,Team T1,Team T2){
@@ -202,21 +213,16 @@ public class GameOn implements TableListener {
 			}
 		}
 	}
-	
-//	public static void main(String[] args) {
-//		
-//		
-//		
-//	}
 
 	public GameOn(GUI gui) {
 		super();
+		GameOn.lastgame=this;
 		this.gui = gui;
-		this.initGame();
-		this.mainGameMethod();
-	}	
+		//this.initGame();
+		//this.mainGameMethod();
+	}
 	
-	private void mainGameMethod() {
+	public void mainGameMethod() {
 		boolean fin=false;
 		Random dec = new Random();
 		int start = dec.nextInt(2) + 1;
@@ -239,6 +245,14 @@ public class GameOn implements TableListener {
 			while (endround!=true){
 			//	freshthemap();
 				while (p1turn==true && endturn1==false){
+					
+					try{
+						Thread.sleep(100);
+					}
+					catch (InterruptedException ex){
+						ex.printStackTrace();
+					}
+					
 					gui.appendToChat("Player 1's turn" + "\n");
 					p1turn=true;
 					p2turn=false;
@@ -246,6 +260,14 @@ public class GameOn implements TableListener {
 						notrecruited=true;
 					}
 					while (endturn1!=true){
+						
+						try{
+							Thread.sleep(100);
+						}
+						catch (InterruptedException ex){
+							ex.printStackTrace();
+						}
+						
 						if (round % 5 == 0 && notrecruited==true){
 							recruiting = true;
 							movephase=false;		
@@ -265,6 +287,14 @@ public class GameOn implements TableListener {
 					}
 				}
 				while (p2turn==true && endturn2==false){
+					
+					try{
+						Thread.sleep(100);
+					}
+					catch (InterruptedException ex){
+						ex.printStackTrace();
+					}
+					
 					gui.appendToChat("Player 2's turn" + "\n");
 					p2turn=true;
 					p1turn=false;
@@ -272,6 +302,14 @@ public class GameOn implements TableListener {
 						notrecruited=true;
 					}
 					while(endturn2!=true){
+						
+						try{
+							Thread.sleep(100);
+						}
+						catch (InterruptedException ex){
+							ex.printStackTrace();
+						}
+						
 						if (round % 5 == 0  && notrecruited==true){
 							recruiting = true;						
 							movephase=false;
@@ -320,10 +358,10 @@ public class GameOn implements TableListener {
 		
 	}
 
-	private void initGame() {
+	public void initGame() {
 		//inicializ�l�s
 		victpoint=50;
-		M=new Map();
+		M=new Map(true);
 		T1=new Team(1);
 		T2=new Team(2);
 		initTeams();
@@ -645,12 +683,12 @@ public class GameOn implements TableListener {
 		p1turn=!p1turn;
 		if (p1turn==false){
 			endturn1=true;
-			Communication.send_table(M);
+			//Communication.send_table(M);
 		}
 		p2turn=!p2turn;
 		if (p2turn==false){
 			endturn2=true;
-			Communication.send_table(M);
+			//Communication.send_table(M);
 		}
 	}
 	
@@ -667,8 +705,10 @@ public class GameOn implements TableListener {
 	@Override
 	public void recieveTable(Map table) {
 		// TODO Auto-generated method stub
-		//M=table;
-		 gui.getGameCanvasPanel().setCells(M.toGraphicCellArray());
+		M=table;
+		gui.appendToChat("Table recieved");
+		freshthemap(); 
+		gui.getGameCanvasPanel().setCells(M.toGraphicCellArray());
 	}
 	
 	
