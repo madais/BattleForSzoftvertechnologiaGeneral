@@ -8,9 +8,16 @@ import bfsztg_gui.GraphicCell.Terrain;
 import bfsztg_gui.GraphicCell.Unit;
 import bfsztg_settings.gameSettings;
 
+/**
+ * This class contains the fields and the units
+ *
+ */
 public class Map {
 	public Area map[][];//m�trixot k�ne
 	
+	/**
+	 * Initializing map
+	 */
 	public Map(){
 		super();
 		map=new Area[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
@@ -26,6 +33,10 @@ public class Map {
 		}
 	}
 	
+	/**
+	 * Random map initializing
+	 * @param random
+	 */
 	public Map(boolean random){
 		//map= new Area{Water(1,1), };//fel is k�ne t�rlteni
 		map=new Area[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
@@ -153,6 +164,11 @@ public class Map {
 		}
 	}
 	
+	/**
+	 * Find one field's neighbours
+	 * @param row
+	 * @param column
+	 */
 	public void findneighbour(int row, int column){
 		map[row][column].setNeighnum(0);
 		map[row][column].neighbours=new int[48][2];
@@ -256,6 +272,12 @@ public class Map {
 		}
 	}
 	
+	/**
+	 * Find the second neighbours
+	 * @param row
+	 * @param column
+	 * @param neignum
+	 */
 	void findcavneighb(int row, int column, int neignum){
 		for (int i=0;i<neignum;i++){
 //			if (map[map[row][column].getneighbours(i, 0)][map[row][column].getneighbours(i, 1)].getGameunit()!=null){
@@ -349,6 +371,12 @@ public class Map {
 			}
 		}
 //	}
+	
+	/**
+	 * Find targets for archer
+	 * @param row
+	 * @param column
+	 */
 	void findarchtarger(int row, int column){
 		//c�lpontok keres�se l�t�von bel�l
 		map[row][column].setTargetnum(0);;
@@ -455,6 +483,10 @@ public class Map {
 		return map[posX][posY];
 	}
 	
+	/**
+	 * Convert Map to GraphicCell
+	 * @return
+	 */
 	public GraphicCell[][] toGraphicCellArray(){
 		GraphicCell result[][] = null;
 		result = new GraphicCell[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];

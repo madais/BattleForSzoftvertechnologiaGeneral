@@ -2,6 +2,10 @@ package game.map;
 
 import game.unit.Unit;
 
+/**
+ * This class contains the territorial type
+ *
+ */
 public class Area {
 	int poz1;//sor
 	int poz2;//oszlop

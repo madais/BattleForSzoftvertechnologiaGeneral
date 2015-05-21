@@ -60,6 +60,11 @@ public class GameOn implements TableListener, Runnable {
 	    NONE, ARCHER, CAVALRY, INFANTRY 
 	}
 	
+	
+	/**
+	 * Damage calculation
+	 * @return damage
+	 */
 	static int dmgcalc(){
 		Random dec = new Random();
 		int dmg = dec.nextInt(6) + 1;
@@ -69,6 +74,13 @@ public class GameOn implements TableListener, Runnable {
 		return dmg;
 	}
 
+	/**
+	 * Called when one unit move
+	 * @param M - Map
+	 * @param A - Unit
+	 * @param poz1 - positionX
+	 * @param poz2 - positinY
+	 */
 	static void move(Map M, Unit A, int poz1, int poz2) {
 		M.map[A.poz1][A.poz2].setGameunit(null);
 		A.setpoz(poz1,poz2);
@@ -82,6 +94,13 @@ public class GameOn implements TableListener, Runnable {
 		Communication.send_table(M);
 	}
 
+	/**
+	 *  Called when one unit attacks another
+	 * @param M - Map
+	 * @param A - Unit1
+	 * @param B - Unit2
+	 * @param longshoot
+	 */
 	void attack(Map M, Unit A, Unit B, boolean longshoot) {
 		// ha a k�-pap�r-oll� j�t�k teljes�l
 		// lovas �ti az �j�sz
@@ -118,9 +137,9 @@ public class GameOn implements TableListener, Runnable {
 			A.decreasehp(dmg1);
 			B.decreasehp(dmg2);
 			System.out.println("buny� volt :)");
-			System.out.println("T�mad� egys�g sebz�se:" + dmg1);
+//			System.out.println("T�mad� egys�g sebz�se:" + dmg1);
 			gui.appendToChat("Attacker make:" + dmg2 + "damage\n");
-			System.out.println("v�dekez� egys�g sebz�se:" + dmg2);
+//			System.out.println("v�dekez� egys�g sebz�se:" + dmg2);
 			gui.appendToChat("Defender make:" + dmg1 + "damage\n");
 		}
 		A.moved();
@@ -154,6 +173,13 @@ public class GameOn implements TableListener, Runnable {
 //		}
 //	}
 
+	
+	/**
+	 * After one round finished, it's calculate the points
+	 * @param M - Map
+	 * @param T1 - Team1
+	 * @param T2 - Team2
+	 */
 	public static void setpoints(Map M, Team T1, Team T2){
 		int t1=0;
 		int t2=0;
@@ -179,11 +205,19 @@ public class GameOn implements TableListener, Runnable {
 			}
 		}
 		T1.setpoint(t1);
-		System.out.println("P1 get " + t1 + " point(s)");
+//		System.out.println("P1 get " + t1 + " point(s)");
 		T2.setpoint(t2);
-		System.out.println("P2 get " + t2 + " point(s)");
+//		System.out.println("P2 get " + t2 + " point(s)");
 	}
 	
+	
+	/**
+	 * Check the victory conditions
+	 * @param T1 - Team1
+	 * @param T2 - Team2
+	 * @param victpoint
+	 * @return true is the game is over
+	 */
 	public static boolean victorycond(Team T1, Team T2, int victpoint){
 		if (T1.points>=victpoint || T2.points>=victpoint){
 			return true;
@@ -193,6 +227,12 @@ public class GameOn implements TableListener, Runnable {
 		}
 	}
 	
+	/**
+	 * Called after somebody winned the game
+	 * @param T1 - Team1
+	 * @param T2 - Team2
+	 * @param victpoint
+	 */
 	public static void victory(Team T1, Team T2, int victpoint){
 		if (T1.points>=victpoint){
 			System.out.println("P" + 1 + " is the winner");
@@ -204,6 +244,13 @@ public class GameOn implements TableListener, Runnable {
 		}
 	}	
 	
+	
+	/**
+	 * Called after one round finished. Reset units moveable parameter
+	 * @param M - Map
+	 * @param T1 - Team1
+	 * @param T2 - Team2
+	 */
 	public static void newround(Map M, Team T1, Team T2){
 		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
 			for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){
@@ -358,6 +405,9 @@ public class GameOn implements TableListener, Runnable {
 		
 	}
 
+	/**
+	 * Initializing the game
+	 */
 	public void initGame() {
 		//inicializ�l�s
 		victpoint=50;
@@ -375,10 +425,13 @@ public class GameOn implements TableListener, Runnable {
 		//		
 	}
 	
+	/**
+	 * Initializing teams
+	 */
 	void initTeams(){
-		if(M.map[1][1] == null){
-			System.out.println("THIS BULLCRAP IS NULL!!!");
-		}
+//		if(M.map[1][1] == null){
+//			System.out.println("THIS BULLCRAP IS NULL!!!");
+//		}
 		
 //		// TEAM1
 		
@@ -447,7 +500,12 @@ public class GameOn implements TableListener, Runnable {
 //		M.map[23][9].setGameunit(new Pikeman(2, 9, gameSettings.MAP_SIZE_X-1)); 
 	}
 	
-	
+	/**
+	 * Called when one of the players clicked on the map, 
+	 * decide what it means, and act if it's necessary 
+	 * @param clickedX
+	 * @param clickedY
+	 */
 	public void thereWasAClick(int clickedX, int clickedY){
 		System.out.println("There was a click.");
 		if (recruiting){
@@ -539,7 +597,7 @@ public class GameOn implements TableListener, Runnable {
 					movepoz1=clickedX;
 					movepoz2=clickedY;
 					alreadychoosenonestack=true;
-					M.printneigh(clickedX,clickedY);
+//					M.printneigh(clickedX,clickedY);
 					gui.getGameCanvasPanel().setCells(cells);
 				 }
 			 }
@@ -696,6 +754,9 @@ public class GameOn implements TableListener, Runnable {
 		}
 	}
 	
+	/**
+	 * Refress the map after move.
+	 */
 	void freshthemap(){
 		for (int i=0;i<gameSettings.MAP_SIZE_X;i++){
 			for (int j=0;j<gameSettings.MAP_SIZE_Y;j++){

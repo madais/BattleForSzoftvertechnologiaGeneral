@@ -2,6 +2,11 @@ package game.unit;
 
 import game.map.Map;
 
+
+/**
+ * This class contains one team units and points
+ *
+ */
 public class Team {
 	public int points;
 	public int teamnum;
@@ -11,10 +16,22 @@ public class Team {
 		teamnum=0;
 	}
 	
+	/**
+	 * Increase team points
+	 * @param newpoint
+	 */
 	public void setpoint(int newpoint){
 		this.points=this.points+newpoint;
 	}
 	
+	/**
+	 * Initializing one new stack to the team
+	 * @param Map
+	 * @param Unitid
+	 * @param teamnumber
+	 * @param positionX
+	 * @param positionY
+	 */
 	public void newstack(Map m, int id, int teamnumber,int poz1, int poz2){
 		if (id==1){
 			units[teamnum]=new Cavalary(teamnumber,poz1, poz2);

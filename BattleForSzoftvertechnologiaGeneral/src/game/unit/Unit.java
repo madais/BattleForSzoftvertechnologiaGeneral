@@ -2,6 +2,11 @@ package game.unit;
 
 import game.map.Area;
 
+/**
+ * This class contains the units parameters
+ *
+ */
+
 public class Unit {
 	public int hp;//életpontok
 	public int team;//csapat
