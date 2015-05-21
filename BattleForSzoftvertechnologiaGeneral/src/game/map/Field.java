@@ -6,12 +6,17 @@ import game.unit.Unit;
 
 public class Field extends Area{	
 
-	Field (int poz1, int poz2, Unit unit){
+	public Field (int poz1, int poz2, Unit unit){
+		super();
 		this.id=1;
 		this.poz1=poz1;
 		this.poz2=poz2;
 		this.shoot=true;
 		this.gameunit=unit;
 		this.moveable=true;
+	}
+	
+	public Field (){
+		super();
 	}
 }

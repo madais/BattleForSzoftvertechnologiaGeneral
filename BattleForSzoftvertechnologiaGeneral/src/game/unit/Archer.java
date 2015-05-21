@@ -8,5 +8,8 @@ public class Archer extends Unit{
 		this.poz1=poz1;
 		this.poz2=poz2;
 	}
-	//kettõ mezõre tud lõni
+	//kettï¿½ mezï¿½re tud lï¿½ni
+	public Archer(){
+		super();
+	}
 }

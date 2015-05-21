@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import communication.Communication;
 import game.game.BattleForSzoftvertechnologiaGeneral_v2;
+import game.game.GameOn;
 
 /**
  * Action listener for the connect menu option.
@@ -53,7 +54,11 @@ GUI parent;
 	    	  Communication.connect_server(cim[0], Integer.parseInt(cim[1]));
 	    	  parent.getBtnSend().addActionListener(new SendChatActionListener(parent));
 	    	  Communication.subscribe_message(parent);
-	    	  Communication.subscribe_table(BattleForSzoftvertechnologiaGeneral_v2.getgame());
+	    	  Communication.subscribe_table(GameOn.lastgame);
+	    	  
+	    	  Thread game=new Thread(GameOn.lastgame);
+	    	  game.start();
+
 	      }
 	
 	}

@@ -8,5 +8,8 @@ public class Cavalary extends Unit{
 		this.poz1=poz1;
 		this.poz2=poz2;
 	}
-	//kettõt tud menni
+	//kettï¿½t tud menni
+	public Cavalary(){
+		super();
+	}
 }

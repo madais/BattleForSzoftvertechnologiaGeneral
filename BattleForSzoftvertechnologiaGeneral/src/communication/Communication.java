@@ -91,7 +91,7 @@ public abstract class Communication {
 	 * @param listener - the input parameter
 	 */
 	public static void subscribe_table(TableListener listener){
-		client.subscribe_table(listener);
+		client.subscribe_tbl(listener);
 	}
 
 	/**

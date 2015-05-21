@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import communication.CommTest;
 import communication.Communication;
 import game.game.BattleForSzoftvertechnologiaGeneral_v2;
+import game.map.Map;
 
 /**
  * Action listener for the host menu option.
@@ -58,9 +59,18 @@ public class HostMenuAction extends AbstractAction {
 	    	try{
 	    	  Communication.start_server(inputValue);
 	    	  Communication.subscribe_message(this.parent);
-	    	  //Communication.subscribe_table(BattleForSzoftvertechnologiaGeneral_v2.getgame());
+	    	  Communication.subscribe_table(GameOn.lastgame);
+	    	  GameOn.lastgame.initGame();
+	    	  
+	    	  //Communication.send_table(GameOn.lastgame.getM());
+	    	  
+	    	  Thread game=new Thread(GameOn.lastgame);
+	    	  game.start();
+	    	  //GameOn.lastgame.mainGameMethod();
+	    	  
 	    	  //Communication.send_message("Ez a cim: " + Communication.getlocalport());;
 	    	  parent.getBtnSend().addActionListener(new SendChatActionListener(parent)); 
+	    	 
 	    	}
 	    	catch (Exception ex){
 	    		ex.printStackTrace();

@@ -9,18 +9,34 @@ import bfsztg_gui.GraphicCell.Unit;
 import bfsztg_settings.gameSettings;
 
 public class Map {
-	public Area map[][];//mátrixot kéne
+	public Area map[][];//mï¿½trixot kï¿½ne
 	
 	public Map(){
-		//map= new Area{Water(1,1), };//fel is kéne törlteni
+		super();
+		map=new Area[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
+		for ( int row=1 ; row <= gameSettings.MAP_SIZE_X ; row++ ){
+			for ( int column=1 ; column <= gameSettings.MAP_SIZE_Y ; column++ ){
+				if (column==6 && (row==6 || row==12 || row==18)){
+					map[row-1][column-1]=new Castle(row,column,null);
+				}
+				else{
+					map[row-1][column-1]=new Field(row,column,null);
+				}
+			} 
+		}
+	}
+	
+	public Map(boolean random){
+		//map= new Area{Water(1,1), };//fel is kï¿½ne tï¿½rlteni
 		map=new Area[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
 		//map[1][1]=new Field(1,1);//hosszadalmas lenne
 		
-		int waternum=15;//vízfelületek száma
-		int forestnum=15;//erdõk száma
-		int mountainnum=15;//hegyek száma
-		int desertnum=15;//sivatagok száma
-		int swampnum=15;//mocsárok száma
+		int waternum=15;//vï¿½zfelï¿½letek szï¿½ma
+		int forestnum=15;//erdï¿½k szï¿½ma
+		int mountainnum=15;//hegyek szï¿½ma
+		int desertnum=15;//sivatagok szï¿½ma
+		int swampnum=15;//mocsï¿½rok szï¿½ma
+		
 		
 		for ( int row=1 ; row <= gameSettings.MAP_SIZE_X ; row++ ){
 			for ( int column=1 ; column <= gameSettings.MAP_SIZE_Y ; column++ ){
@@ -334,7 +350,7 @@ public class Map {
 		}
 //	}
 	void findarchtarger(int row, int column){
-		//célpontok keresése lõtávon belül
+		//cï¿½lpontok keresï¿½se lï¿½tï¿½von belï¿½l
 		map[row][column].setTargetnum(0);;
 		map[row][column].targets= new int[12][2];
 		if (row>1){
