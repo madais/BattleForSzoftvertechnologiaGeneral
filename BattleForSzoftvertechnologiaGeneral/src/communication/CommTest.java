@@ -1,7 +1,11 @@
 package communication;
 
 import java.io.IOException;
-
+/**
+ * Class for testing.
+ * @author mdi
+ *
+ */
 public class CommTest {
 
 	public static void main(String[] args) throws IOException{

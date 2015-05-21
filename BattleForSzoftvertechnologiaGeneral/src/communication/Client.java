@@ -29,7 +29,11 @@ import java.util.ArrayList;
 import communication.MsgListener;
 import game.map.*;
 //import java.util.List;
-
+/**
+ * Client class for TCP/IP communication for the game
+ * @author mdi
+ *
+ */
 public class Client extends Communication implements Runnable{
 	
 	
@@ -58,6 +62,10 @@ public class Client extends Communication implements Runnable{
 	
 	
 	@Override
+	/**
+	 * Overrided run method for multithreading
+	 * Checks if various messagequeues are empty, if not, sends or recieves the message, based on the type of the queue 
+	 */
 	public void run() {
 		while(true){
 				
@@ -108,7 +116,11 @@ public class Client extends Communication implements Runnable{
 			}*/
 		}
 	}
-
+/**
+ * Null parameter constructor
+ * Creates a client, a socket for it, connects to the default server and binds its streams.
+ * @throws IOException
+ */
 	public Client() throws IOException{
 		super();
 		this.client_socket=new Socket(DEFAULTHOST, DEFAULTPORT);
@@ -122,7 +134,11 @@ public class Client extends Communication implements Runnable{
 		}
 		
 	} 
-	
+	/**
+	 * Creates a client, a socket for it, connects to the specified host server and binds its streams.
+	 * @param host
+	 * @throws IOException
+	 */
 	public Client(String host) throws IOException{
 		super();
 		this.client_socket=new Socket(host, DEFAULTPORT);
@@ -135,7 +151,12 @@ public class Client extends Communication implements Runnable{
 			System.out.println("Client socket created:" + client_socket.getPort());
 		}
 	} 
-	
+	/**
+	 * Creates a client, a socket for it, connects to the specified server on the specified port and binds its streams.
+	 * @param host
+	 * @param port
+	 * @throws IOException
+	 */
 	public Client(String host, int port) throws IOException{
 		super();
 		this.client_socket=new Socket(host, port);
@@ -148,6 +169,11 @@ public class Client extends Communication implements Runnable{
 		}
 	} 
 	
+	/**
+	 * Reads incoming XML, saves it in a file, and updates the approriate messagequeue
+	 * @return
+	 * @throws IOException
+	 */
 	private synchronized boolean read_data() throws IOException{
 		if (read_socket.available()>0){
 			
@@ -176,7 +202,12 @@ public class Client extends Communication implements Runnable{
 		}
 		return true;
 	}
-	
+	/**
+	 * Send a generic object over the network, and save it in XML
+	 * @param o
+	 * @return
+	 * @throws IOException
+	 */
 	public synchronized boolean send_data(Object o) throws IOException{
 		
 		
@@ -201,13 +232,21 @@ public class Client extends Communication implements Runnable{
 		
 		return true;
 	}
-	
+	/**
+	 * Add a String message to the sendable queue
+	 * Utility function for other classes
+	 * @param msg
+	 * @return
+	 */
 	public boolean send_msg(String msg){
 		//msg_out_list.add(msg);
 		msg_out_list.add(msg);
 		return true;
 	}
 	
+	/**
+	 * Callback for the subscribed listeners. Call each of them with the recieved message
+	 */
 	public void recieve_msg(){
 		String msg=msg_in_list.remove(0);
 		for (MsgListener subscriber :msg_list){
@@ -215,13 +254,21 @@ public class Client extends Communication implements Runnable{
 		}
 		return ;
 	}
-
+/**
+ * Add a gamemap message to the sendable queue
+ * Utility function for other classes
+ * @param table
+ * @return
+ */
+ 
 	public boolean send_table_client(Map table){
 		
 		table_out_list.add(table);
 		return true;
 	}
-	
+	/**
+	 * Callback for the subscribed listeners. Call each of them with the recieved message
+	 */
 	public void recieve_table(){
 		//GameOn table=table_in_list.remove(0);
 		Map table=table_in_list.remove(0);
@@ -230,16 +277,24 @@ public class Client extends Communication implements Runnable{
 		}
 		return ;
 	}
-	
+	/**
+	 * Subscribe service for String messages. Updates the subsciberlist.
+	 * @param listener
+	 */
 	public void subscribe_msg(MsgListener listener){
 		msg_list.add(listener);
 	}
-
+/**
+ * Subscribe service for gamemap messages. Updates the subsciberlist.
+ * @param listener
+ */
 	public void subscribe_tbl(TableListener listener){
 		table_list.add(listener);
 	}
 
-	
+	/**
+	 * Close all open sockets.
+	 */
 	public void close_all(){
 		try {
 		client_socket.close();

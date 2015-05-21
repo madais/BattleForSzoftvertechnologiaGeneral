@@ -10,6 +10,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Server class, accepts connection request and starts a client handler thread for each.
+ * @author mdi
+ *
+ */
 public class Server extends Communication implements Runnable{
 	
 	
@@ -22,7 +27,10 @@ public class Server extends Communication implements Runnable{
 	
 	ArrayList<Runnable> run_list=new ArrayList<Runnable>();
 	ArrayList<String> client_list=new ArrayList<String>();
-	
+	/**
+	 * Overrided method
+	 * Listens on the server port, and starts a new client thread in case of connection request.
+	 */
 	public void run() {
 		// TODO Auto-generated method stub
 		while(true){
@@ -51,7 +59,10 @@ public class Server extends Communication implements Runnable{
 		}
 	}
 
-	
+	/**
+	 * Null parameter constructor
+	 * Starts a server on the default port
+	 */
 	public Server() throws IOException{
 		super();
 		this.serversocket = new java.net.ServerSocket(DEFAULTPORT);
@@ -61,7 +72,11 @@ public class Server extends Communication implements Runnable{
 		}
 	}
 	
-
+	/**
+	 * Start a server listening on a specified port.
+	 * @param port
+	 * @throws IOException
+	 */
 	public Server(int port) throws IOException{
 		super();
 		this.serversocket= new java.net.ServerSocket(port);

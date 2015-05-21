@@ -9,7 +9,8 @@ import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 
 /**
- * This class is very cool.
+ * Multiple client handler object for server.
+ * Creates a new client object for each connection request.
  * @author mdi
  *
  */
@@ -23,8 +24,12 @@ public class ClientHandler extends Communication implements Runnable{
 	
 	private static ArrayList<BufferedOutputStream> outlist=new ArrayList<BufferedOutputStream>();
 	
-	
+
 	@Override
+	/**
+	 * Overrided run method for multithreading.
+	 * Sends all incoming data to every listed client, including the original sender.  
+	 */
 	public void run() {
 		if (DEBUG){
 			System.out.println("Client connected to socket: " + clientsocket.getPort());
@@ -58,7 +63,10 @@ public class ClientHandler extends Communication implements Runnable{
 		
 	}
 
-
+	/**
+	 * Connects the streams to the clientports. Updates the list of clients.
+	 * @param soc
+	 */
 	public ClientHandler(Socket soc){
 		super();
 		if (number<MAXCLIENT){
