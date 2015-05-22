@@ -485,7 +485,7 @@ public class Map {
 	
 	/**
 	 * Convert Map to GraphicCell
-	 * @return
+	 * @return GraphicCell
 	 */
 	public GraphicCell[][] toGraphicCellArray(){
 		GraphicCell result[][] = null;

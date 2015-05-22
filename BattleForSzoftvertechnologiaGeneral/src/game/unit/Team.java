@@ -26,11 +26,11 @@ public class Team {
 	
 	/**
 	 * Initializing one new stack to the team
-	 * @param Map
-	 * @param Unitid
+	 * @param m - Map
+	 * @param id - Unitid
 	 * @param teamnumber
-	 * @param positionX
-	 * @param positionY
+	 * @param poz1 - positionX
+	 * @param poz2 - positionY
 	 */
 	public void newstack(Map m, int id, int teamnumber,int poz1, int poz2){
 		if (id==1){

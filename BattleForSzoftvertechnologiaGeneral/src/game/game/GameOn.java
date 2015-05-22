@@ -450,12 +450,12 @@ public class GameOn implements TableListener, Runnable {
 		T2.newstack(M, 3, 2, 23, 0);
 		T2.newstack(M, 3, 2, 23, 9);
 		
-		T1.newstack(M, 1, 1, 10, 4);
-		T1.newstack(M, 2, 1, 10, 5);
-		T1.newstack(M, 3, 1, 10, 6);
-		T2.newstack(M, 1, 2, 13, 4);
-		T2.newstack(M, 2, 2, 13, 5);
-		T2.newstack(M, 3, 2, 13, 6);
+//		T1.newstack(M, 1, 1, 10, 4);
+//		T1.newstack(M, 2, 1, 10, 5);
+//		T1.newstack(M, 3, 1, 10, 6);
+//		T2.newstack(M, 1, 2, 13, 4);
+//		T2.newstack(M, 2, 2, 13, 5);
+//		T2.newstack(M, 3, 2, 13, 6);
 		
 //		System.out.println("0 7 szomsz�sai"+M.map[23][7].getNeighnum());
 //		System.out.println("0 8 szomsz�sai"+M.map[23][8].getNeighnum());
@@ -508,6 +508,7 @@ public class GameOn implements TableListener, Runnable {
 	 */
 	public void thereWasAClick(int clickedX, int clickedY){
 		System.out.println("There was a click.");
+//		if ((p1turn==true && sajatip==szerverip) || (p2turn==true && sajatip==kliensip)){
 		if (recruiting){
 			if(recruitType == RecruitType.NONE){
 				JOptionPane.showMessageDialog(null, "First choose recruit type!");	
@@ -651,6 +652,7 @@ public class GameOn implements TableListener, Runnable {
 			 }
 		}
 		System.out.println("End of click, redrawing cells.");
+//	}
 	}
 	public GUI getGui() {
 		return gui;
