@@ -177,6 +177,19 @@ public class Client extends Communication implements Runnable{
 	private synchronized boolean read_data() throws IOException{
 		if (read_socket.available()>0){
 			
+			File dir = new File("msg");
+
+			// if the directory does not exist, create it
+			if (!dir.exists()) {
+				try{
+			        dir.mkdir();  
+			    } 
+			    catch(SecurityException ex){
+			        ex.printStackTrace();
+			    }        
+			    
+			}
+			
 			File file_in= new File("./msg/recieved_" + String.valueOf(file_in_cnt) + ".xml");
 			xml_in=new XMLDecoder(read_socket);
 			Object o=xml_in.readObject();
@@ -210,6 +223,18 @@ public class Client extends Communication implements Runnable{
 	 */
 	public synchronized boolean send_data(Object o) throws IOException{
 		
+		File dir = new File("msg");
+
+		// if the directory does not exist, create it
+		if (!dir.exists()) {
+			try{
+		        dir.mkdir();  
+		    } 
+		    catch(SecurityException ex){
+		        ex.printStackTrace();
+		    }        
+		    
+		}
 		
 		File file_out=new File("./msg/sent_" + String.valueOf(file_out_cnt) + ".xml");
 		FileOutputStream file_ir= new FileOutputStream(file_out);
