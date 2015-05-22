@@ -218,7 +218,7 @@ public class Client extends Communication implements Runnable{
 	/**
 	 * Send a generic object over the network, and save it in XML
 	 * @param o
-	 * @return
+	 * @return 
 	 * @throws IOException
 	 */
 	public synchronized boolean send_data(Object o) throws IOException{

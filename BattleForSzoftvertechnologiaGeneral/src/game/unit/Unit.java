@@ -8,9 +8,9 @@ import game.map.Area;
  */
 
 public class Unit {
-	public int hp;//életpontok
+	public int hp;//Ã©letpontok
 	public int team;//csapat
-	public int unitid;//azonosító
+	public int unitid;//azonosÃ­tÃ³
 	public int poz1;//sor
 	public int poz2;//oszlop
 	public boolean moved;

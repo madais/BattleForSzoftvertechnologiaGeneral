@@ -176,8 +176,8 @@ public class GameCanvasPanel extends JPanel{
 			cellCornersY = new int[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
 			cellCentersX = new int[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
 			cellCentersY = new int[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
-			int a = 65; //egy cella szÈlessÈge
-			int b = 57; //magass·ga
+			int a = 65; //egy cella sz√©less√©ge
+			int b = 57; //magass√°ga
 			cells = new GraphicCell[gameSettings.MAP_SIZE_X][gameSettings.MAP_SIZE_Y];
 			for(int i=0; i<gameSettings.MAP_SIZE_X; i++) {
 				for(int j=0; j<gameSettings.MAP_SIZE_Y; j++) {
